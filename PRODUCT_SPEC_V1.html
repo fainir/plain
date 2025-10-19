@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plain - Product Specification V1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        section {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin: 30px 0 15px;
+            color: #764ba2;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin: 20px 0 10px;
+            color: #555;
+        }
+
+        .flow-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .flow-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .flow-step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .flow-step-content {
+            flex: 1;
+        }
+
+        .flow-step-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .flow-step-url {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #667eea;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .flow-step-description {
+            color: #666;
+            margin-top: 8px;
+            font-size: 0.95em;
+        }
+
+        .arrow {
+            text-align: center;
+            color: #667eea;
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .journey-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .journey-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .journey-card h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .url-map {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .url-item {
+            display: flex;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+
+        .url-path {
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-weight: bold;
+            min-width: 300px;
+        }
+
+        .url-desc {
+            color: #666;
+            padding-left: 20px;
+        }
+
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .capability-item {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .capability-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .highlight-box strong {
+            color: #856404;
+        }
+
+        .workspace-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .workspace-type {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            color: #667eea;
+            transition: all 0.2s;
+        }
+
+        .workspace-type:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .flow-step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .flow-step-number {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .url-item {
+                flex-direction: column;
+            }
+
+            .url-path {
+                min-width: auto;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌿 Plain</h1>
+            <p>AI-Powered Life Planning Platform - Version 1.0 Specification</p>
+        </header>
+
+        <!-- URL Structure -->
+        <section>
+            <h2>📍 URL Structure & Pages</h2>
+
+            <div class="url-map">
+                <div class="url-item">
+                    <div class="url-path">/</div>
+                    <div class="url-desc">Home page - Browse planner types (unauthenticated) OR Workspace list (authenticated)</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/login</div>
+                    <div class="url-desc">Authentication page - Sign in / Sign up</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/life</div>
+                    <div class="url-desc">Life planner landing page with integrated chat</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/food</div>
+                    <div class="url-desc">Food planner landing page with integrated chat</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/fitness</div>
+                    <div class="url-desc">Fitness planner landing page with integrated chat</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/finance</div>
+                    <div class="url-desc">Finance planner landing page with integrated chat</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/p/:workspaceId</div>
+                    <div class="url-desc">Workspace view with sidebar, tables, views, and chat</div>
+                </div>
+
+                <div class="url-item">
+                    <div class="url-path">/p/:workspaceId/:docId</div>
+                    <div class="url-desc">Specific table or view within workspace (e.g., /p/abc123/today, /p/abc123/goals)</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Key Design Principles:</strong><br>
+                • No separate /planners route - planner types shown directly on home for unauthenticated users<br>
+                • No separate /chat route - chat is integrated into planner pages and workspaces<br>
+                • Authenticated users see workspace list at / (root)<br>
+                • Short /p/ prefix for workspace URLs (clean and memorable)<br>
+                • Direct doc/view URLs allow deep linking and bookmarking
+            </div>
+        </section>
+
+        <!-- User Journeys -->
+        <section>
+            <h2>🚀 User Journeys</h2>
+
+            <!-- Journey 1: Discovery to First Plan -->
+            <h3>Journey 1: New User Discovery → First Generated Plan</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Land on Home Page</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">User searches for "task manager" or "life planner" and discovers Plain. Home shows planner type cards.</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Select Planner Type</div>
+                        <div class="flow-step-url">/life</div>
+                        <div class="flow-step-description">Choose "Life Planner" - see description, features, and chat interface</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Chat & Generate Plan</div>
+                        <div class="flow-step-url">/life</div>
+                        <div class="flow-step-description">
+                            User: "I want to run a marathon and learn Spanish"<br>
+                            AI generates workspace structure with goals, actions, timelines
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Authentication Required</div>
+                        <div class="flow-step-url">/login?redirectedFrom=/p/[generated-id]</div>
+                        <div class="flow-step-description">Prompt to sign up/in to save the generated plan</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">View Generated Workspace</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">
+                            Life Planner workspace created with:<br>
+                            - Health & Fitness category (Marathon goal)<br>
+                            - Personal Growth category (Spanish learning)<br>
+                            - Pre-populated goals, actions, and timeline views
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">6</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">View Specific Documents</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f/today</div>
+                        <div class="flow-step-description">
+                            Click "Today" view in sidebar to see today's actions<br>
+                            URL updates for direct access and bookmarking
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">7</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Interact & Customize</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">
+                            - Add/edit data in tables<br>
+                            - Create custom views<br>
+                            - Chat to modify plan: "Add weekly Spanish practice sessions"<br>
+                            - AI updates data and views accordingly
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey 2: Direct SEO Entry -->
+            <h3>Journey 2: Direct SEO Entry → Food Planner</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Google Search</div>
+                        <div class="flow-step-url">Google: "meal planning app"</div>
+                        <div class="flow-step-description">User searches for specific planner type</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Land on Food Planner Page</div>
+                        <div class="flow-step-url">/food</div>
+                        <div class="flow-step-description">SEO-optimized landing page with food planner features and chat</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Start Chat</div>
+                        <div class="flow-step-url">/food</div>
+                        <div class="flow-step-description">
+                            User: "Create a meal plan for weight loss, 1800 calories/day"<br>
+                            AI generates meal plan workspace
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Sign In & Save</div>
+                        <div class="flow-step-url">/login → /p/[workspace-id]</div>
+                        <div class="flow-step-description">Food plan saved to Life Planner workspace under "Nutrition" category</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Access Meal Plan View</div>
+                        <div class="flow-step-url">/p/[workspace-id]/meals</div>
+                        <div class="flow-step-description">Direct link to meal plan view, can bookmark or share</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey 3: Returning User -->
+            <h3>Journey 3: Returning Authenticated User</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Visit Home</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">
+                            Authenticated - automatically shows workspace list:<br>
+                            🙂 Life Planner<br>
+                            🏢 Company Planner<br>
+                            🏋️ Fitness Tracker
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Select Workspace</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">Click on Life Planner to access workspace</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Work in Workspace</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f/today</div>
+                        <div class="flow-step-description">Access Today view, chat to add more plans or modify existing ones</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey 4: Create Empty Workspace -->
+            <h3>Journey 4: Power User → Custom Empty Workspace</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Workspace List</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">Authenticated home page, click "➕ Add Workspace" button</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Create Workspace</div>
+                        <div class="flow-step-url">/ (modal)</div>
+                        <div class="flow-step-description">Enter name: "Project Management Hub"</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Workspace Created</div>
+                        <div class="flow-step-url">/p/[new-workspace-id]</div>
+                        <div class="flow-step-description">
+                            Auto-created with default structure:<br>
+                            - Goals table<br>
+                            - Actions table<br>
+                            - Today view<br>
+                            - This Week view<br>
+                            - Default categories
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Customize via Chat</div>
+                        <div class="flow-step-url">/p/[new-workspace-id]</div>
+                        <div class="flow-step-description">
+                            Chat: "Add a Sprints table and Kanban board view"<br>
+                            AI creates custom tables/views for project management
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Access Custom View</div>
+                        <div class="flow-step-url">/p/[new-workspace-id]/sprints-kanban</div>
+                        <div class="flow-step-description">View sprints in Kanban layout with direct URL</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey 5: Multi-Plan Workspace -->
+            <h3>Journey 5: Multiple Plans in Single Workspace</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Existing Life Planner</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">Already has Marathon and Spanish learning plans</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Add New Plan via Chat</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">
+                            Chat: "I want to save $50k for a house down payment in 2 years"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">AI Adds to Same Workspace</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f</div>
+                        <div class="flow-step-description">
+                            Creates new "Finance" category (or uses existing)<br>
+                            Adds savings goal, monthly actions, budget tracking<br>
+                            All using same tables (Goals, Actions) with category filtering
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">View All Plans Together</div>
+                        <div class="flow-step-url">/p/20ad61b9-bc90-4f60-915d-6e2f12d5740f/all-goals</div>
+                        <div class="flow-step-description">
+                            Categories in sidebar:<br>
+                            💪 Health & Fitness (Marathon)<br>
+                            🌱 Personal Growth (Spanish)<br>
+                            💰 Finance (House savings)<br>
+                            <br>
+                            Views show combined data from all categories or filtered by category
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Journey 6: Separate Workspaces for Different Contexts -->
+            <h3>Journey 6: Separate Workspaces for Life vs. Work</h3>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">User Has Life Planner</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">Home shows: 🙂 Life Planner workspace with personal goals</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Create Company Workspace</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">Click "➕ Add Workspace" → "Company Planner"</div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Chat to Populate Work Plans</div>
+                        <div class="flow-step-url">/p/[company-workspace-id]</div>
+                        <div class="flow-step-description">
+                            Chat: "Add Q1 OKRs, product roadmap, and hiring pipeline"<br>
+                            AI creates work-specific tables and data
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Switch Between Contexts</div>
+                        <div class="flow-step-url">/</div>
+                        <div class="flow-step-description">
+                            Easily switch between:<br>
+                            🙂 Life Planner at /p/[life-id]<br>
+                            🏢 Company Planner at /p/[work-id]<br>
+                            Both isolated, both use same core tables + custom additions
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Capabilities -->
+        <section>
+            <h2>⚡ Core Capabilities - Version 1.0</h2>
+
+            <h3>1. AI-Powered Plan Generation</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Natural Language Input</strong>
+                    Chat interface accepts plain English requests for any type of plan
+                </div>
+                <div class="capability-item">
+                    <strong>Smart Workspace Routing</strong>
+                    AI determines whether to add to existing workspace or create new one
+                </div>
+                <div class="capability-item">
+                    <strong>Category-Based Organization</strong>
+                    Plans organized by categories (Health, Finance, etc.) within workspaces
+                </div>
+                <div class="capability-item">
+                    <strong>Pre-populated Data</strong>
+                    Generated plans include realistic goals, actions, and timelines
+                </div>
+                <div class="capability-item">
+                    <strong>View Generation</strong>
+                    AI creates relevant views (Today, This Week, Kanban, etc.) based on plan type
+                </div>
+                <div class="capability-item">
+                    <strong>Continuous Refinement</strong>
+                    User can chat to modify, add, or remove elements from generated plans
+                </div>
+            </div>
+
+            <h3>2. Flexible Data Management</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Universal Tables</strong>
+                    Core tables (Goals, Actions, etc.) work across all plan types
+                </div>
+                <div class="capability-item">
+                    <strong>Custom Tables</strong>
+                    Add plan-specific tables (Meals, Workouts, Budget, etc.) via chat or manually
+                </div>
+                <div class="capability-item">
+                    <strong>Manual Data Entry</strong>
+                    Users can add, edit, delete rows in any table
+                </div>
+                <div class="capability-item">
+                    <strong>AI Data Modification</strong>
+                    Chat can update existing data: "Mark marathon goal as completed"
+                </div>
+                <div class="capability-item">
+                    <strong>Category Filtering</strong>
+                    Filter any view by categories to focus on specific plans
+                </div>
+                <div class="capability-item">
+                    <strong>Multi-Category Views</strong>
+                    Views can show data from multiple categories or single category
+                </div>
+            </div>
+
+            <h3>3. Dynamic View System</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Default Views</strong>
+                    Today, This Week, All Goals, All Actions created by default
+                </div>
+                <div class="capability-item">
+                    <strong>Custom Views via Chat</strong>
+                    "Create a Kanban board for my fitness actions"
+                </div>
+                <div class="capability-item">
+                    <strong>Manual View Creation</strong>
+                    Power users can create views with custom filters and layouts
+                </div>
+                <div class="capability-item">
+                    <strong>Multiple Layouts</strong>
+                    Table, Kanban, Calendar, Timeline, Gallery, Chart, Hierarchy
+                </div>
+                <div class="capability-item">
+                    <strong>Smart Filtering</strong>
+                    Views automatically filter by date, status, category, etc.
+                </div>
+                <div class="capability-item">
+                    <strong>Direct View URLs</strong>
+                    Each view has its own URL (/p/:workspaceId/:viewId) for bookmarking
+                </div>
+            </div>
+
+            <h3>4. Workspace Management</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Multiple Workspaces</strong>
+                    Separate workspaces for different contexts (Life, Work, etc.)
+                </div>
+                <div class="capability-item">
+                    <strong>Default Workspace</strong>
+                    First plan creates Life Planner workspace automatically
+                </div>
+                <div class="capability-item">
+                    <strong>Empty Workspace Creation</strong>
+                    Create blank workspace with default structure from home page
+                </div>
+                <div class="capability-item">
+                    <strong>Smart Icons</strong>
+                    Workspaces have customizable emoji icons
+                </div>
+                <div class="capability-item">
+                    <strong>Easy Switching</strong>
+                    Switch between workspaces via home page (/) or sidebar
+                </div>
+                <div class="capability-item">
+                    <strong>Workspace Sorting</strong>
+                    Life Planner always appears first in list
+                </div>
+            </div>
+
+            <h3>5. Authentication & User Management</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Email/Password Auth</strong>
+                    Simple sign up/sign in with Supabase
+                </div>
+                <div class="capability-item">
+                    <strong>Guest Plan Generation</strong>
+                    Generate plans before auth, prompt to save
+                </div>
+                <div class="capability-item">
+                    <strong>Post-Auth Redirect</strong>
+                    Return to generated plan after authentication
+                </div>
+                <div class="capability-item">
+                    <strong>Session Persistence</strong>
+                    Stay logged in across sessions
+                </div>
+                <div class="capability-item">
+                    <strong>User-Scoped Data</strong>
+                    Each user sees only their workspaces via RLS
+                </div>
+                <div class="capability-item">
+                    <strong>Home Page Intelligence</strong>
+                    Show workspace list if authenticated, planner types if not
+                </div>
+            </div>
+
+            <h3>6. Chat-Driven Interface</h3>
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Integrated Chat</strong>
+                    Chat embedded in planner pages and workspaces, no separate route
+                </div>
+                <div class="capability-item">
+                    <strong>Context Awareness</strong>
+                    Chat knows current workspace and can reference existing data
+                </div>
+                <div class="capability-item">
+                    <strong>Multi-Step Operations</strong>
+                    "Add weekly date nights and link to relationships goal"
+                </div>
+                <div class="capability-item">
+                    <strong>Data Modification</strong>
+                    Chat can create, update, delete any data
+                </div>
+                <div class="capability-item">
+                    <strong>Schema Modification</strong>
+                    Chat can add tables, views, categories
+                </div>
+                <div class="capability-item">
+                    <strong>Suggestions</strong>
+                    AI suggests improvements: "Want to add a habit tracker?"
+                </div>
+            </div>
+        </section>
+
+        <!-- Planner Types -->
+        <section>
+            <h2>🎯 Planner Types (Launch Set)</h2>
+
+            <div class="workspace-types">
+                <div class="workspace-type">🙂 Life Planner (/life)</div>
+                <div class="workspace-type">🍽️ Food Planner (/food)</div>
+                <div class="workspace-type">🏋️ Fitness Tracker (/fitness)</div>
+                <div class="workspace-type">💰 Finance Manager (/finance)</div>
+                <div class="workspace-type">💼 Career Planner (/career)</div>
+                <div class="workspace-type">🏠 Home Management (/home)</div>
+                <div class="workspace-type">✈️ Travel Planner (/travel)</div>
+                <div class="workspace-type">📚 Learning Tracker (/learning)</div>
+                <div class="workspace-type">🎨 Creative Projects (/creative)</div>
+                <div class="workspace-type">❤️ Relationship Tracker (/relationships)</div>
+            </div>
+
+            <div class="highlight-box">
+                <strong>Key Insight:</strong> All planner types share the same core table structure (Goals, Actions, Resources, etc.). The difference is in the pre-populated data, suggested views, and category defaults. This allows multiple plan types to coexist in a single workspace. Each planner type has its own landing page route for SEO (e.g., /food, /fitness) with integrated chat.
+            </div>
+        </section>
+
+        <!-- Technical Foundation -->
+        <section>
+            <h2>🔧 Technical Foundation</h2>
+
+            <h3>Database Schema</h3>
+            <ul class="feature-list">
+                <li><strong>workspaces:</strong> User workspaces with name, icon, description</li>
+                <li><strong>workspace_members:</strong> User access to workspaces (RLS enabled)</li>
+                <li><strong>categories:</strong> Hierarchical categories within workspaces</li>
+                <li><strong>table_schemas:</strong> Table definitions (Goals, Actions, etc.)</li>
+                <li><strong>view_schemas:</strong> View configurations (filters, layouts, columns)</li>
+                <li><strong>table_data:</strong> Actual data rows with JSONB storage</li>
+            </ul>
+
+            <h3>Core Tables (Default in Every Workspace)</h3>
+            <ul class="feature-list">
+                <li><strong>Goals:</strong> High-level objectives with target dates, progress tracking</li>
+                <li><strong>Actions:</strong> Tasks and todos linked to goals, with scheduling</li>
+                <li><strong>Resources:</strong> Links, files, notes related to goals/actions</li>
+                <li><strong>Milestones:</strong> Key checkpoints in goal achievement</li>
+                <li><strong>Reflections:</strong> Journal entries and progress notes</li>
+            </ul>
+
+            <h3>Default Views</h3>
+            <ul class="feature-list">
+                <li><strong>Today:</strong> Actions due today or overdue (/p/:id/today)</li>
+                <li><strong>This Week:</strong> Actions for current week (/p/:id/this-week)</li>
+                <li><strong>All Goals:</strong> Table view of all goals (/p/:id/all-goals)</li>
+                <li><strong>Active Actions:</strong> All incomplete actions (/p/:id/active-actions)</li>
+                <li><strong>Calendar:</strong> Timeline view of dated items (/p/:id/calendar)</li>
+                <li><strong>Progress Dashboard:</strong> Chart view of goal completion (/p/:id/progress)</li>
+            </ul>
+
+            <h3>Default Categories</h3>
+            <ul class="feature-list">
+                <li>💪 Health & Fitness (with subcategories: Nutrition, Exercise)</li>
+                <li>💰 Finance</li>
+                <li>❤️ Relationships</li>
+                <li>🌱 Personal Growth</li>
+                <li>💼 Career</li>
+                <li>🏠 Home & Living</li>
+            </ul>
+        </section>
+
+        <!-- Key Workflows -->
+        <section>
+            <h2>🔄 Key Workflows</h2>
+
+            <div class="journey-grid">
+                <div class="journey-card">
+                    <h4>First-Time User</h4>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>Land on home (/) - see planner type cards</li>
+                        <li>Click on Life Planner → /life</li>
+                        <li>Chat to generate plan on same page</li>
+                        <li>Prompted to sign up/in</li>
+                        <li>Redirect to /p/[workspace-id]</li>
+                        <li>Continue chatting to refine</li>
+                    </ol>
+                </div>
+
+                <div class="journey-card">
+                    <h4>Returning User Adding Plan</h4>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>Home (/) shows workspace list</li>
+                        <li>Open Life Planner → /p/[id]</li>
+                        <li>Chat: "I want to train for a triathlon"</li>
+                        <li>AI adds to Health & Fitness category</li>
+                        <li>New data appears in existing views</li>
+                        <li>Click view → /p/[id]/today</li>
+                    </ol>
+                </div>
+
+                <div class="journey-card">
+                    <h4>Power User Custom Workspace</h4>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>From home (/), click "Add Workspace"</li>
+                        <li>Name: "Startup Launch"</li>
+                        <li>Gets default tables/views at /p/[new-id]</li>
+                        <li>Chat: "Add investor pipeline table"</li>
+                        <li>AI creates custom table + Kanban view</li>
+                        <li>View at /p/[new-id]/investors</li>
+                    </ol>
+                </div>
+
+                <div class="journey-card">
+                    <h4>SEO-Driven Entry</h4>
+                    <ol style="padding-left: 20px; margin-top: 10px;">
+                        <li>Google: "meal planning app"</li>
+                        <li>Land on /food with chat</li>
+                        <li>Chat: "Meal plan for vegetarian family"</li>
+                        <li>Sign up to save</li>
+                        <li>Redirect to /p/[id]</li>
+                        <li>View meals at /p/[id]/meals</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Metrics -->
+        <section>
+            <h2>📊 Success Metrics for V1</h2>
+
+            <h3>User Engagement</h3>
+            <ul class="feature-list">
+                <li>% of visitors who generate a plan (Chat Engagement Rate)</li>
+                <li>% of plan generators who sign up (Conversion Rate)</li>
+                <li>Average plans per user</li>
+                <li>Daily active users returning to workspaces</li>
+                <li>Chat messages per user per session</li>
+            </ul>
+
+            <h3>Plan Quality</h3>
+            <ul class="feature-list">
+                <li>% of generated plans that get edited/refined (shows value)</li>
+                <li>% of plans with data added after generation</li>
+                <li>Average categories per workspace (multi-plan usage)</li>
+                <li>Custom tables/views created per workspace</li>
+            </ul>
+
+            <h3>Retention</h3>
+            <ul class="feature-list">
+                <li>Day 1, Day 7, Day 30 retention rates</li>
+                <li>Workspaces accessed in last 7 days</li>
+                <li>Plans marked as completed (goal achievement)</li>
+            </ul>
+        </section>
+
+        <!-- Future Considerations -->
+        <section>
+            <h2>🔮 Future Considerations (Post-V1)</h2>
+
+            <div class="capability-grid">
+                <div class="capability-item">
+                    <strong>Collaboration</strong>
+                    Share workspaces with others, team planning
+                </div>
+                <div class="capability-item">
+                    <strong>Reminders & Notifications</strong>
+                    Email/push for upcoming actions and deadlines
+                </div>
+                <div class="capability-item">
+                    <strong>Mobile Apps</strong>
+                    Native iOS/Android apps
+                </div>
+                <div class="capability-item">
+                    <strong>Integrations</strong>
+                    Connect with Google Calendar, Notion, etc.
+                </div>
+                <div class="capability-item">
+                    <strong>Templates</strong>
+                    Pre-made workspace templates users can clone
+                </div>
+                <div class="capability-item">
+                    <strong>AI Coaching</strong>
+                    Proactive suggestions and accountability
+                </div>
+                <div class="capability-item">
+                    <strong>Data Export</strong>
+                    Export plans to PDF, CSV, etc.
+                </div>
+                <div class="capability-item">
+                    <strong>Voice Input</strong>
+                    Voice-to-text for chat interface
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Priority -->
+        <section>
+            <h2>🚦 Implementation Priority</h2>
+
+            <h3 style="color: #22c55e;">✅ Phase 1: Core Foundation (Week 1-2)</h3>
+            <ul class="feature-list">
+                <li>Home page (/ - dual mode: planner types for guests, workspace list for auth)</li>
+                <li>Individual planner pages with integrated chat (/:type - /life, /food, /fitness, etc.)</li>
+                <li>Auth integration (guest → sign up flow with redirect)</li>
+                <li>Default workspace creation (Life Planner)</li>
+                <li>Workspace view (/p/:workspaceId) with sidebar navigation</li>
+                <li>Document/view direct links (/p/:workspaceId/:docId)</li>
+            </ul>
+
+            <h3 style="color: #3b82f6;">🔨 Phase 2: AI Generation (Week 3-4)</h3>
+            <ul class="feature-list">
+                <li>Chat API integration with Claude</li>
+                <li>Plan generation from natural language</li>
+                <li>Data population (goals, actions, etc.)</li>
+                <li>Category assignment logic</li>
+                <li>View generation based on plan type</li>
+                <li>Multi-turn chat refinement</li>
+            </ul>
+
+            <h3 style="color: #f59e0b;">⚙️ Phase 3: Data Management (Week 5)</h3>
+            <ul class="feature-list">
+                <li>Manual data entry/editing in tables</li>
+                <li>Create custom views UI</li>
+                <li>Add workspace functionality from home page</li>
+                <li>Category filtering in views</li>
+                <li>Table/View icons and customization</li>
+                <li>Deep linking to specific views</li>
+            </ul>
+
+            <h3 style="color: #8b5cf6;">🚀 Phase 4: Polish & Launch (Week 6)</h3>
+            <ul class="feature-list">
+                <li>SEO optimization for planner pages (/life, /food, etc.)</li>
+                <li>Responsive design refinement</li>
+                <li>Performance optimization</li>
+                <li>Error handling and edge cases</li>
+                <li>Analytics integration</li>
+                <li>Launch preparation</li>
+            </ul>
+        </section>
+
+        <!-- Development Task Checklist -->
+        <section>
+            <h2>✅ Development Task Checklist</h2>
+
+            <div class="highlight-box" style="background: #d1fae5; border-left-color: #10b981;">
+                <strong>Progress Overview:</strong> Core infrastructure complete. Ready for AI integration and polish.
+            </div>
+
+            <h3 style="color: #10b981;">✅ Completed Tasks</h3>
+
+            <h4>Backend Infrastructure</h4>
+            <ul class="feature-list">
+                <li>✅ Supabase database setup with RLS</li>
+                <li>✅ Database schema (workspaces, workspace_members, categories, table_schemas, view_schemas, table_data)</li>
+                <li>✅ User authentication with Supabase Auth</li>
+                <li>✅ Backend API endpoints (FastAPI)</li>
+                <li>✅ GET /api/workspaces - List user workspaces</li>
+                <li>✅ POST /api/workspaces - Create workspace</li>
+                <li>✅ GET /api/workspaces/:id/schema/tables - Get table schemas</li>
+                <li>✅ GET /api/workspaces/:id/schema/views - Get view schemas</li>
+                <li>✅ GET /api/workspaces/:id/data/:tableId - Get table data</li>
+                <li>✅ POST /api/workspaces/:id/data/:tableId - Create table row</li>
+                <li>✅ PATCH /api/workspaces/:id/data/:tableId/:rowId - Update table row</li>
+                <li>✅ DELETE /api/workspaces/:id/data/:tableId/:rowId - Delete table row</li>
+                <li>✅ GET /api/workspaces/:id/view/:viewId - Get view data (fixed sourceTable bug)</li>
+                <li>✅ Category filtering in data endpoints</li>
+                <li>✅ Default workspace structure creation (tables/views/categories)</li>
+                <li>✅ Sample Life Planner workspace with populated data</li>
+                <li>✅ WebSocket chat endpoint with Claude API integration</li>
+                <li>✅ POST /api/workspaces/persist-guest-plan - Convert guest plans to workspaces</li>
+                <li>✅ PATCH /api/workspaces/:id/data/:tableId/:rowId - Enhanced to support partial field updates</li>
+                <li>✅ PATCH /api/workspaces/:id - Update workspace settings (name, icon, description)</li>
+                <li>✅ DELETE /api/workspaces/:id - Delete workspace with owner verification</li>
+                <li>✅ DELETE /api/workspaces/:id/data/:tableId/:rowId - Delete table rows</li>
+                <li>✅ View filter logic fixed with operator support (eq, in, ne, gt, lt, gte, lte, contains, within)</li>
+            </ul>
+
+            <h4>Frontend Infrastructure</h4>
+            <ul class="feature-list">
+                <li>✅ Next.js 15 app with App Router</li>
+                <li>✅ Supabase client setup</li>
+                <li>✅ Home page (/) - Dual mode (planner types / workspace list)</li>
+                <li>✅ Login page with Supabase Auth UI</li>
+                <li>✅ Auth callback handling</li>
+                <li>✅ Middleware for route protection</li>
+                <li>✅ Workspace view (/p/:workspaceId)</li>
+                <li>✅ Direct document links (/p/:workspaceId/:docId)</li>
+                <li>✅ FileExplorer component with workspace switcher</li>
+                <li>✅ DataViewer component for tables and views</li>
+                <li>✅ Category filter component</li>
+                <li>✅ Multiple layout support (table, kanban, calendar, timeline, etc.)</li>
+                <li>✅ TopBar navigation</li>
+                <li>✅ Responsive drawer system (left/right)</li>
+                <li>✅ Add workspace functionality</li>
+                <li>✅ Dark mode support</li>
+                <li>✅ Planner landing pages (/life, /food, /fitness, /finance, /career, /learning)</li>
+                <li>✅ useAIChat hook for WebSocket chat integration</li>
+                <li>✅ AI chat UI with message history and loading states</li>
+                <li>✅ Guest plan persistence with localStorage</li>
+                <li>✅ Auth callback with /auth/persist-plan handler</li>
+                <li>✅ Sign-up prompt banners on all planner pages</li>
+                <li>✅ Inline table editing with click-to-edit cells</li>
+                <li>✅ Workspace auto-selection from URL fixed</li>
+                <li>✅ Better error handling with retry buttons and error messages</li>
+                <li>✅ Empty state messaging with helpful context</li>
+                <li>✅ Loading states with animated spinners</li>
+                <li>✅ WorkspaceSettings component with modal UI</li>
+                <li>✅ Delete workspace confirmation with redirect to home</li>
+                <li>✅ Row deletion with confirmation dialog</li>
+            </ul>
+
+            <h3 style="color: #f59e0b;">🔨 In Progress / Needs Work</h3>
+
+            <h4>High Priority - Required for MVP</h4>
+            <ul class="feature-list" style="list-style: none;">
+                <li style="padding-left: 0;">✅ <strong>Planner Landing Pages</strong> - Created /life, /food, /fitness, /finance, /career, /learning pages with chat UI</li>
+                <li style="padding-left: 0;">✅ <strong>AI Chat Integration</strong> - Connected to Claude API via WebSocket with useAIChat hook</li>
+                <li style="padding-left: 0;">✅ <strong>Manual Data Entry</strong> - CRUD endpoints (POST/PATCH/DELETE) for table rows</li>
+                <li style="padding-left: 0;">✅ <strong>Default Table/View Creation</strong> - Auto-create all tables/views/categories on new workspace</li>
+                <li style="padding-left: 0;">✅ <strong>Plan Generation Logic</strong> - AI context enhanced with planner type awareness for better plan suggestions</li>
+                <li style="padding-left: 0;">✅ <strong>Guest Plan Generation</strong> - Plans stored in localStorage with auto-persistence after signup</li>
+                <li style="padding-left: 0;">✅ <strong>Post-Auth Workspace Persistence</strong> - Guest plans automatically converted to workspaces after auth</li>
+                <li style="padding-left: 0;">✅ <strong>Sign-up Prompts</strong> - All planner pages show save banner after messages generated</li>
+                <li style="padding-left: 0;">✅ <strong>Fix View Data Rendering</strong> - Fixed operator-based filter logic (eq, in, ne, gt, lt, contains, within)</li>
+                <li style="padding-left: 0;">✅ <strong>Fix Workspace Auto-Selection</strong> - Now respects workspace ID from URL parameter</li>
+                <li style="padding-left: 0;">✅ <strong>Inline Table Editing</strong> - Click-to-edit cells in table views with save/cancel</li>
+                <li style="padding-left: 0;">✅ <strong>Better Error Handling</strong> - Improved error states with retry buttons, save error messages, and user-friendly messaging</li>
+                <li style="padding-left: 0;">✅ <strong>Empty States</strong> - Better messaging when no data with contextual help text</li>
+                <li style="padding-left: 0;">✅ <strong>Loading States</strong> - Animated spinners for better perceived performance</li>
+                <li style="padding-left: 0;">✅ <strong>Workspace Settings</strong> - Modal UI to edit name, icon, description with PATCH endpoint</li>
+            </ul>
+
+            <h4>Medium Priority - Enhanced UX</h4>
+            <ul class="feature-list" style="list-style: none;">
+                <li style="padding-left: 0;">✅ <strong>Delete Workspace</strong> - Confirmation modal with DELETE endpoint and cascade delete</li>
+                <li style="padding-left: 0;">✅ <strong>Delete Table Rows</strong> - Delete button on each row with confirmation dialog</li>
+                <li style="padding-left: 0;">✅ <strong>Professional Landing Pages</strong> - Enhanced home page and all planner pages with professional design including: hero sections with gradient text, value propositions with hover effects, testimonials, social proof badges, "How It Works" sections with connecting lines, detailed feature cards with bullet points, example prompts, and compelling CTAs with background patterns</li>
+                <li style="padding-left: 0;">✅ <strong>Guest Workspace Auto-Open</strong> - When unsigned users create plans on planner pages (/fitness, /life, etc.), AI automatically generates a workspace and redirects to /guest/[workspaceId] showing their plan with full workspace UI</li>
+                <li style="padding-left: 0;">✅ <strong>Unified AuthModal Component</strong> - Created AuthModal component with tabbed interface (Sign In / Sign Up tabs) that works on all pages without leaving the page. Includes auto-signin after signup, error handling, and trust badges. Replaced all separate sign-in/sign-up buttons across planner pages and guest workspace pages.</li>
+                <li style="padding-left: 0;">✅ <strong>Sign-Up Banner & Modal</strong> - Guest workspace pages show prominent sign-up banner at top with "Sign Up Free" and "Sign In" buttons. Clicking either opens AuthModal with appropriate tab selected</li>
+                <li style="padding-left: 0;">✅ <strong>Guest Plan Persistence</strong> - After guest signs up via modal, automatically persists their guest workspace to their account via /auth/persist-plan endpoint</li>
+                <li style="padding-left: 0;">📋 <strong>Custom View Creation UI</strong> - Let users create views manually</li>
+                <li style="padding-left: 0;">📋 <strong>Table Schema Editor</strong> - Add/modify columns</li>
+                <li style="padding-left: 0;">📋 <strong>Category Management UI</strong> - Create/edit categories</li>
+                <li style="padding-left: 0;">📋 <strong>Data Export</strong> - Export tables to CSV/JSON</li>
+                <li style="padding-left: 0;">📋 <strong>Keyboard Shortcuts</strong> - Quick navigation</li>
+            </ul>
+
+            <h4>Lower Priority - Polish</h4>
+            <ul class="feature-list" style="list-style: none;">
+                <li style="padding-left: 0;">🎨 <strong>SEO Optimization</strong> - Meta tags, sitemap, robots.txt (Landing page content ✅ completed)</li>
+                <li style="padding-left: 0;">✅ <strong>Landing Page Design</strong> - COMPLETED - Professional landing pages with gradient hero sections, social proof, testimonials, value props with hover effects, step-by-step "How It Works" with visual connectors, feature grids, example prompts, and multi-layered CTAs. Implemented on home page and life planner (template for others)</li>
+                <li style="padding-left: 0;">🎨 <strong>Mobile Optimization</strong> - Better mobile UX</li>
+                <li style="padding-left: 0;">🎨 <strong>Animation Polish</strong> - Smooth transitions</li>
+                <li style="padding-left: 0;">🎨 <strong>Empty States</strong> - Better messaging when no data</li>
+                <li style="padding-left: 0;">🎨 <strong>Onboarding Flow</strong> - Guide new users</li>
+                <li style="padding-left: 0;">🎨 <strong>Analytics Setup</strong> - Track key metrics</li>
+                <li style="padding-left: 0;">🎨 <strong>Performance Optimization</strong> - Code splitting, lazy loading</li>
+            </ul>
+
+            <h3 style="color: #ef4444;">🚫 Known Issues to Fix</h3>
+            <ul class="feature-list" style="list-style: none;">
+                <li style="padding-left: 0;">🐛 <strong>Auth Middleware Disabled</strong> - Session cookies not working server-side (using client-side auth)</li>
+                <li style="padding-left: 0;">🐛 <strong>Child Category Import</strong> - Parent_id UUID issue</li>
+                <li style="padding-left: 0;">✅ <strong>View Filters Not Applied</strong> - Fixed operator-based filter logic (eq, in, ne, gt, lt, within, etc.)</li>
+                <li style="padding-left: 0;">✅ <strong>Workspace Auto-Selection</strong> - Fixed to respect URL parameter instead of auto-selecting first workspace</li>
+                <li style="padding-left: 0;">🐛 <strong>Navigation State</strong> - Selected item highlighting</li>
+            </ul>
+
+            <h3 style="color: #8b5cf6;">📅 Recommended Development Order</h3>
+
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Fix Critical Bugs</div>
+                        <div class="flow-step-description">
+                            • Fix view data rendering issues<br>
+                            • Fix auth middleware or document client-side auth approach<br>
+                            • Fix workspace auto-selection from URL
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Complete Core Data Flow</div>
+                        <div class="flow-step-description">
+                            • Implement manual data entry (add/edit/delete rows)<br>
+                            • Auto-create default tables/views on new workspace<br>
+                            • Test full CRUD operations
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Build Planner Landing Pages</div>
+                        <div class="flow-step-description">
+                            • Create /life, /food, /fitness pages<br>
+                            • Add marketing copy and screenshots<br>
+                            • Integrate chat UI placeholder
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">AI Chat Integration</div>
+                        <div class="flow-step-description">
+                            • Connect to Claude API<br>
+                            • Implement plan generation prompts<br>
+                            • Parse AI responses to create workspaces/data<br>
+                            • Handle guest → authenticated user flow
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Enhanced Data Management</div>
+                        <div class="flow-step-description">
+                            • Custom view creation UI<br>
+                            • Category management<br>
+                            • Workspace settings<br>
+                            • Better UX flows
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="flow-step">
+                    <div class="flow-step-number">6</div>
+                    <div class="flow-step-content">
+                        <div class="flow-step-title">Polish & Launch Prep</div>
+                        <div class="flow-step-description">
+                            • SEO optimization<br>
+                            • Mobile optimization<br>
+                            • Analytics setup<br>
+                            • Performance tuning<br>
+                            • User testing
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="background: #fef3c7; border-left-color: #f59e0b;">
+                <strong>MVP Definition:</strong> A working product where users can:<br>
+                1. Sign up and create workspaces<br>
+                2. Chat with AI to generate plans<br>
+                3. View and manually edit their data<br>
+                4. Access via SEO-friendly planner pages<br>
+                <br>
+                <strong>Estimated Time to MVP:</strong> 2-3 weeks of focused development
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Animate flow steps on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(20px)';
+
+                    setTimeout(() => {
+                        entry.target.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.flow-step, .journey-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

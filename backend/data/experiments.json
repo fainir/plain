@@ -1,0 +1,32 @@
+[
+  {
+    "id": "experiment-1",
+    "experiment_name": "Morning vs evening running",
+    "linked_hypothesis": "hypothesis-1",
+    "protocol": "Run mornings for 4 weeks, then evenings for 4 weeks. Track energy and mood.",
+    "success_metric": "Identify which time has better mood/energy impact",
+    "cost_resources": "Time only",
+    "start": "2025-01-01",
+    "due": "2025-03-01",
+    "status": "Running",
+    "outcome": "TBD",
+    "next_step": "Continue morning runs for 2 more weeks",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "experiment-2",
+    "experiment_name": "Dashboard customization prototype",
+    "linked_hypothesis": "hypothesis-2",
+    "protocol": "Build simple prototype with theme options. Show to 10 users.",
+    "success_metric": ">70% positive feedback",
+    "cost_resources": "20 hours dev time",
+    "start": "2025-01-10",
+    "due": "2025-02-10",
+    "status": "Running",
+    "outcome": "In progress",
+    "next_step": "Complete prototype by Jan 25",
+    "category_id": "career",
+    "workspace_id": "company"
+  }
+]

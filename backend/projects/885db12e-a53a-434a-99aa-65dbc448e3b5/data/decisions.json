@@ -1,0 +1,47 @@
+[
+  {
+    "id": "decision-1",
+    "topic": "Marathon vs Half Marathon",
+    "options_considered": [
+      "Full marathon",
+      "Half marathon only",
+      "Multiple half marathons"
+    ],
+    "criteria": [
+      "Time commitment",
+      "Injury risk",
+      "Personal challenge",
+      "Achievement value"
+    ],
+    "choice": "Full marathon",
+    "rationale": "It's a bucket list item and I have the time this year. Risk is manageable with proper training.",
+    "decision_date": "2024-12-15",
+    "follow_up_date": "2025-06-01",
+    "outcome_notes": "Training going well so far",
+    "category_id": "career",
+    "workspace_id": "company"
+  },
+  {
+    "id": "decision-2",
+    "topic": "Which product feature to prioritize",
+    "options_considered": [
+      "User dashboard",
+      "Mobile app",
+      "API improvements",
+      "Analytics"
+    ],
+    "criteria": [
+      "User impact",
+      "Development time",
+      "Revenue potential",
+      "Technical debt"
+    ],
+    "choice": "User dashboard",
+    "rationale": "Highest user demand and clearest path to increased engagement",
+    "decision_date": "2025-01-05",
+    "follow_up_date": "2025-03-31",
+    "outcome_notes": "Design phase in progress",
+    "category_id": "finance",
+    "workspace_id": "company"
+  }
+]

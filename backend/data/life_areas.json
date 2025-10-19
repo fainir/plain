@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+    "name": "Health & Fitness",
+    "description": "Physical and mental wellbeing",
+    "emoji": "\ud83d\udcaa",
+    "status": "Active",
+    "owner": "Me",
+    "last_review": "2025-01-10",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q",
+    "name": "Career",
+    "description": "Professional development and work",
+    "emoji": "\ud83d\udcbc",
+    "status": "Active",
+    "owner": "Me",
+    "last_review": "2025-01-08",
+    "category_id": "finance",
+    "workspace_id": "company"
+  },
+  {
+    "id": "3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r",
+    "name": "Relationships",
+    "description": "Family, friends, and connections",
+    "emoji": "\u2764\ufe0f",
+    "status": "Active",
+    "owner": "Me",
+    "last_review": "2025-01-05",
+    "category_id": "career",
+    "workspace_id": "company"
+  }
+]

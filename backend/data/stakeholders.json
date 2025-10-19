@@ -1,0 +1,41 @@
+[
+  {
+    "id": "stakeholder-1",
+    "name": "Sarah (Coach)",
+    "role": "Running Coach",
+    "influence": "High - guides training decisions",
+    "needs": "Weekly progress updates, injury reports",
+    "preferred_channel": "WhatsApp",
+    "checkin_cadence": "Weekly",
+    "next_checkin": "2025-01-18",
+    "notes": "Very supportive, responds quickly",
+    "category_id": "career",
+    "workspace_id": "company"
+  },
+  {
+    "id": "stakeholder-2",
+    "name": "Product Team",
+    "role": "Work colleagues",
+    "influence": "High - collaborate on features",
+    "needs": "Clear requirements, timely updates, design feedback",
+    "preferred_channel": "Slack",
+    "checkin_cadence": "Daily",
+    "next_checkin": "2025-01-16",
+    "notes": "Daily standup at 9:30am",
+    "category_id": "relationships",
+    "workspace_id": "life"
+  },
+  {
+    "id": "stakeholder-3",
+    "name": "Partner",
+    "role": "Life partner",
+    "influence": "High - impacts schedule and priorities",
+    "needs": "Quality time, communication about commitments",
+    "preferred_channel": "In person",
+    "checkin_cadence": "Daily",
+    "next_checkin": "2025-01-15",
+    "notes": "Date night Fridays",
+    "category_id": "career",
+    "workspace_id": "company"
+  }
+]

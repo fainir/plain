@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(npx create-next-app:*)",
+      "Bash(rmdir:*)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(uvicorn:*)",
+      "Bash(npm run dev:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "Bash(cat:*)",
+      "Bash(python:*)",
+      "Bash(curl http://localhost:8000/api/projects/885db12e-a53a-434a-99aa-65dbc448e3b5)",
+      "Bash(npm install:*)",
+      "Bash(curl:*)",
+      "Bash(pip3 install:*)",
+      "Bash(kill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

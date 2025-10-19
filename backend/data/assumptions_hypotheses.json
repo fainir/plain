@@ -1,0 +1,44 @@
+[
+  {
+    "id": "hypothesis-1",
+    "statement": "Running 5 days per week will improve my mood and energy",
+    "type": "Hypothesis",
+    "area_goal_link": "goal-1",
+    "confidence": 8,
+    "test_method": "Track mood and energy scores daily for 8 weeks",
+    "success_metric": "Average mood score increases by 2 points",
+    "due_date": "2025-03-01",
+    "status": "Testing",
+    "result_notes": "2 weeks in, seeing positive trends",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "hypothesis-2",
+    "statement": "Users want more customization options",
+    "type": "Hypothesis",
+    "area_goal_link": "goal-2",
+    "confidence": 7,
+    "test_method": "User interviews and feature usage tracking",
+    "success_metric": ">60% of interviewed users request customization",
+    "due_date": "2025-02-15",
+    "status": "Testing",
+    "result_notes": "Interviews scheduled",
+    "category_id": "career",
+    "workspace_id": "company"
+  },
+  {
+    "id": "assumption-1",
+    "statement": "I can maintain 20h/week for side projects",
+    "type": "Assumption",
+    "area_goal_link": null,
+    "confidence": 6,
+    "test_method": "Time tracking for one month",
+    "success_metric": "Actually log 20h/week on average",
+    "due_date": "2025-02-01",
+    "status": "Testing",
+    "result_notes": "Week 1: 15h, Week 2: 18h",
+    "category_id": "health",
+    "workspace_id": "life"
+  }
+]

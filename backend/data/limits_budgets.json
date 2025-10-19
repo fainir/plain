@@ -1,0 +1,41 @@
+[
+  {
+    "id": "limit-1",
+    "limit_name": "Monthly discretionary spending",
+    "type": "Money",
+    "limit": "\u20ac500/month",
+    "period": "Monthly",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "enforced": true,
+    "notes": "Excludes rent, groceries, and bills",
+    "category_id": "finance",
+    "workspace_id": "company"
+  },
+  {
+    "id": "limit-2",
+    "limit_name": "Screen time",
+    "type": "Time",
+    "limit": "2h/day",
+    "period": "Daily",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "enforced": false,
+    "notes": "Social media and entertainment only",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "limit-3",
+    "limit_name": "Side projects",
+    "type": "Capacity",
+    "limit": "2 active projects",
+    "period": "Quarterly",
+    "start": "2025-01-01",
+    "end": "2025-12-31",
+    "enforced": true,
+    "notes": "To maintain focus",
+    "category_id": "finance",
+    "workspace_id": "company"
+  }
+]

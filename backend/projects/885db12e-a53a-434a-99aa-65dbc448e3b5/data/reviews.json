@@ -1,0 +1,40 @@
+[
+  {
+    "id": "review-1",
+    "date": "2025-01-12",
+    "cadence": "Weekly",
+    "wins": "Completed all runs, finished design mockups ahead of schedule",
+    "misses": "Skipped reading 2 days, ate poorly on Thursday",
+    "next_tweak": "Prep meals on Sunday to avoid poor food choices",
+    "new_actions": [
+      "Meal prep Sunday"
+    ],
+    "goal_confidence_delta": 1,
+    "mood": 8,
+    "energy": 7,
+    "plan_fit": 8,
+    "top_bottleneck": "Time management during work hours",
+    "notes": "Good week overall, need better structure during work",
+    "category_id": null,
+    "workspace_id": "life"
+  },
+  {
+    "id": "review-2",
+    "date": "2025-01-05",
+    "cadence": "Weekly",
+    "wins": "Started new quarter strong, completed goal planning",
+    "misses": "Didn't set up habit tracking properly",
+    "next_tweak": "Create habit tracker spreadsheet",
+    "new_actions": [
+      "Setup habit tracker"
+    ],
+    "goal_confidence_delta": 0,
+    "mood": 7,
+    "energy": 8,
+    "plan_fit": 7,
+    "top_bottleneck": "Unclear priorities",
+    "notes": "First week of year, building momentum",
+    "category_id": null,
+    "workspace_id": "life"
+  }
+]

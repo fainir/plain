@@ -1,0 +1,51 @@
+[
+  {
+    "id": "health",
+    "name": "Health",
+    "icon": "\ud83d\udcaa",
+    "color": "green",
+    "parent_id": null
+  },
+  {
+    "id": "nutrition",
+    "name": "Nutrition",
+    "icon": "\ud83c\udf4e",
+    "color": "emerald",
+    "parent_id": "health"
+  },
+  {
+    "id": "exercise",
+    "name": "Exercise",
+    "icon": "\ud83c\udfc3",
+    "color": "orange",
+    "parent_id": "health"
+  },
+  {
+    "id": "finance",
+    "name": "Finance",
+    "icon": "\ud83d\udcb0",
+    "color": "blue",
+    "parent_id": null
+  },
+  {
+    "id": "career",
+    "name": "Career",
+    "icon": "\ud83d\udcda",
+    "color": "purple",
+    "parent_id": null
+  },
+  {
+    "id": "relationships",
+    "name": "Relationships",
+    "icon": "\u2764\ufe0f",
+    "color": "rose",
+    "parent_id": null
+  },
+  {
+    "id": "personal_growth",
+    "name": "Personal Growth",
+    "icon": "\ud83c\udf31",
+    "color": "teal",
+    "parent_id": null
+  }
+]

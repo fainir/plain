@@ -1,0 +1,58 @@
+[
+  {
+    "id": "date-1",
+    "event": "First half marathon",
+    "type": "Milestone",
+    "date": "2025-04-15",
+    "reminder": 7,
+    "related_to_type": "goal",
+    "related_to_id": "goal-1",
+    "owner": "Me",
+    "priority": "High",
+    "notes": "City Half Marathon event",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "date-2",
+    "event": "Product feature launch",
+    "type": "Deadline",
+    "date": "2025-03-31",
+    "reminder": 14,
+    "related_to_type": "goal",
+    "related_to_id": "goal-2",
+    "owner": "Product Team",
+    "priority": "High",
+    "notes": "Q1 deadline",
+    "category_id": "finance",
+    "workspace_id": "company"
+  },
+  {
+    "id": "date-3",
+    "event": "Gym membership renewal",
+    "type": "Renewal",
+    "date": "2025-02-01",
+    "reminder": 7,
+    "related_to_type": null,
+    "related_to_id": null,
+    "owner": "Me",
+    "priority": "Med",
+    "notes": "Annual payment \u20ac480",
+    "category_id": "career",
+    "workspace_id": "company"
+  },
+  {
+    "id": "date-4",
+    "event": "Quarterly review",
+    "type": "Review",
+    "date": "2025-03-31",
+    "reminder": 3,
+    "related_to_type": null,
+    "related_to_id": null,
+    "owner": "Me",
+    "priority": "High",
+    "notes": "Review all goals and metrics",
+    "category_id": "health",
+    "workspace_id": "life"
+  }
+]

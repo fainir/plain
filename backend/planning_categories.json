@@ -1,0 +1,160 @@
+{
+  "categories": [
+    {
+      "id": "health",
+      "name": "Health & Fitness",
+      "slug": "health-fitness-planner",
+      "icon": "💪",
+      "color": "emerald",
+      "description": "AI-powered health and fitness planning assistant",
+      "longDescription": "Transform your health journey with our AI consultant. Get personalized fitness plans, nutrition tracking, workout schedules, and health goals tailored to your lifestyle.",
+      "seoTitle": "AI Health & Fitness Planner | Personal Wellness Assistant",
+      "seoDescription": "Free AI-powered health and fitness planner. Create personalized workout plans, track nutrition, set wellness goals, and achieve your health objectives with intelligent planning.",
+      "seoKeywords": ["health planner", "fitness planner", "ai health assistant", "workout planner", "wellness planner", "nutrition tracker"],
+      "features": [
+        "Personalized workout plans",
+        "Nutrition & meal tracking",
+        "Health metrics monitoring",
+        "Goal setting & progress tracking",
+        "Habit formation support"
+      ],
+      "questions": [
+        "What are your primary health and fitness goals?",
+        "What's your current fitness level?",
+        "Do you have any health conditions or limitations?",
+        "How much time can you dedicate to fitness per week?",
+        "What type of activities do you enjoy?"
+      ]
+    },
+    {
+      "id": "finance",
+      "name": "Finance & Budget",
+      "slug": "finance-budget-planner",
+      "icon": "💰",
+      "color": "blue",
+      "description": "AI-powered financial planning and budgeting assistant",
+      "longDescription": "Take control of your finances with AI-driven planning. Create budgets, track expenses, set financial goals, and build wealth with personalized strategies.",
+      "seoTitle": "AI Finance Planner & Budget Manager | Smart Money Planning",
+      "seoDescription": "Free AI-powered finance planner and budget manager. Track expenses, create budgets, set financial goals, and build wealth with intelligent financial planning tools.",
+      "seoKeywords": ["finance planner", "budget planner", "ai financial assistant", "money manager", "expense tracker", "financial planning"],
+      "features": [
+        "Budget creation & tracking",
+        "Expense categorization",
+        "Financial goal setting",
+        "Savings plans",
+        "Investment tracking"
+      ],
+      "questions": [
+        "What are your main financial goals?",
+        "What's your monthly income?",
+        "What are your major expenses?",
+        "Do you have any debt to manage?",
+        "What's your savings target?"
+      ]
+    },
+    {
+      "id": "career",
+      "name": "Career Development",
+      "slug": "career-development-planner",
+      "icon": "💼",
+      "color": "purple",
+      "description": "AI-powered career planning and professional growth assistant",
+      "longDescription": "Accelerate your career with AI guidance. Plan professional development, set career milestones, track skills, and achieve your career aspirations.",
+      "seoTitle": "AI Career Planner | Professional Development Assistant",
+      "seoDescription": "Free AI-powered career development planner. Set career goals, track skills, plan professional growth, and advance your career with intelligent planning tools.",
+      "seoKeywords": ["career planner", "professional development", "ai career assistant", "career goals", "skill development", "career growth"],
+      "features": [
+        "Career goal setting",
+        "Skill development tracking",
+        "Professional milestone planning",
+        "Networking management",
+        "Job search organization"
+      ],
+      "questions": [
+        "What are your career aspirations?",
+        "What's your current role and experience level?",
+        "What skills do you want to develop?",
+        "What's your timeline for career advancement?",
+        "What industries or roles interest you?"
+      ]
+    },
+    {
+      "id": "relationships",
+      "name": "Relationships & Love",
+      "slug": "relationship-life-planner",
+      "icon": "❤️",
+      "color": "rose",
+      "description": "AI-powered relationship and personal life planning assistant",
+      "longDescription": "Nurture meaningful relationships with AI support. Plan quality time, track important dates, set relationship goals, and strengthen your connections.",
+      "seoTitle": "AI Relationship Planner | Personal Life Assistant",
+      "seoDescription": "Free AI-powered relationship and life planner. Strengthen connections, plan quality time, track important dates, and build meaningful relationships with intelligent planning.",
+      "seoKeywords": ["relationship planner", "life planner", "ai relationship assistant", "personal life", "social planning", "connection tracker"],
+      "features": [
+        "Relationship goal setting",
+        "Important date tracking",
+        "Quality time planning",
+        "Communication improvement",
+        "Social event management"
+      ],
+      "questions": [
+        "What relationships are most important to you?",
+        "What relationship goals do you have?",
+        "How often do you want to connect with loved ones?",
+        "What activities strengthen your relationships?",
+        "What challenges are you facing?"
+      ]
+    },
+    {
+      "id": "learning",
+      "name": "Learning & Education",
+      "slug": "learning-education-planner",
+      "icon": "📚",
+      "color": "amber",
+      "description": "AI-powered learning and education planning assistant",
+      "longDescription": "Master new skills with AI-guided learning. Create study plans, track courses, set learning goals, and accelerate your educational journey.",
+      "seoTitle": "AI Learning Planner | Education & Study Assistant",
+      "seoDescription": "Free AI-powered learning and education planner. Create study schedules, track courses, set learning goals, and master new skills with intelligent planning tools.",
+      "seoKeywords": ["learning planner", "study planner", "ai education assistant", "course tracker", "skill learning", "study schedule"],
+      "features": [
+        "Study schedule creation",
+        "Course tracking",
+        "Learning goal setting",
+        "Progress monitoring",
+        "Resource organization"
+      ],
+      "questions": [
+        "What do you want to learn?",
+        "What's your current knowledge level?",
+        "How much time can you dedicate to learning?",
+        "What's your learning style?",
+        "What's your target completion date?"
+      ]
+    },
+    {
+      "id": "business",
+      "name": "Business & Entrepreneurship",
+      "slug": "business-startup-planner",
+      "icon": "🚀",
+      "color": "indigo",
+      "description": "AI-powered business planning and startup assistant",
+      "longDescription": "Launch and grow your business with AI guidance. Plan strategies, track metrics, manage projects, and achieve business success with intelligent planning.",
+      "seoTitle": "AI Business Planner | Startup & Entrepreneurship Assistant",
+      "seoDescription": "Free AI-powered business and startup planner. Create business plans, track metrics, manage projects, and grow your business with intelligent planning tools.",
+      "seoKeywords": ["business planner", "startup planner", "ai business assistant", "entrepreneur tools", "business plan", "project management"],
+      "features": [
+        "Business plan creation",
+        "Metric tracking",
+        "Project management",
+        "Goal setting",
+        "Resource planning"
+      ],
+      "questions": [
+        "What type of business are you planning?",
+        "What's your business goal?",
+        "Who is your target market?",
+        "What resources do you have?",
+        "What's your timeline?"
+      ]
+    }
+  ]
+}

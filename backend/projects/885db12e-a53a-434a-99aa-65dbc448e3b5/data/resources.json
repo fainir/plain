@@ -1,0 +1,47 @@
+[
+  {
+    "id": "resource-1",
+    "name": "Notion",
+    "category": "Tool",
+    "provider": "Notion Labs",
+    "link": "https://notion.so",
+    "capability_level": null,
+    "evidence_usage": "Used daily for notes and planning",
+    "cost_monthly": 10,
+    "cost_annual": 100,
+    "renewal_date": "2025-06-01",
+    "notes": "Personal Pro plan",
+    "category_id": "career",
+    "workspace_id": "company"
+  },
+  {
+    "id": "resource-2",
+    "name": "Running coach certification",
+    "category": "Capability",
+    "provider": null,
+    "link": null,
+    "capability_level": "Beginner",
+    "evidence_usage": "Completed online course, not certified yet",
+    "cost_monthly": null,
+    "cost_annual": null,
+    "renewal_date": null,
+    "notes": "Working towards certification",
+    "category_id": "finance",
+    "workspace_id": "company"
+  },
+  {
+    "id": "resource-3",
+    "name": "John Doe (Mentor)",
+    "category": "Contact",
+    "provider": null,
+    "link": "john@example.com",
+    "capability_level": null,
+    "evidence_usage": "Monthly mentoring calls",
+    "cost_monthly": null,
+    "cost_annual": null,
+    "renewal_date": null,
+    "notes": "Career advisor",
+    "category_id": "career",
+    "workspace_id": "company"
+  }
+]

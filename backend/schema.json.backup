@@ -1,0 +1,568 @@
+{
+  "version": "1.0.0",
+  "description": "Plain - Life Planning System Schema",
+  "tables": {
+    "life_areas": {
+      "displayName": "Life Areas",
+      "icon": "🎯",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "description", "type": "text"},
+        {"name": "emoji", "type": "string"},
+        {"name": "status", "type": "enum", "values": ["Active", "On hold"]},
+        {"name": "owner", "type": "string"},
+        {"name": "last_review", "type": "date"}
+      ]
+    },
+    "year_roadmap": {
+      "displayName": "Year Roadmap",
+      "icon": "📅",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "year", "type": "number", "required": true},
+        {"name": "theme", "type": "string"},
+        {"name": "top_priorities", "type": "array"},
+        {"name": "wont_do", "type": "array"},
+        {"name": "q1_focus", "type": "text"},
+        {"name": "q2_focus", "type": "text"},
+        {"name": "q3_focus", "type": "text"},
+        {"name": "q4_focus", "type": "text"},
+        {"name": "capacity", "type": "text"},
+        {"name": "success_criteria", "type": "array"}
+      ]
+    },
+    "goals": {
+      "displayName": "Goals",
+      "icon": "🎯",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "goal", "type": "string", "required": true},
+        {"name": "timeframe", "type": "enum", "values": ["Annual", "Quarter", "Month", "Week"]},
+        {"name": "why", "type": "text"},
+        {"name": "start", "type": "date"},
+        {"name": "due", "type": "date"},
+        {"name": "priority", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "confidence", "type": "number", "min": 1, "max": 10},
+        {"name": "status", "type": "enum", "values": ["Planned", "Active", "Paused", "Done", "Dropped"]},
+        {"name": "key_results", "type": "array"},
+        {"name": "linked_actions", "type": "array", "references": "actions"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "actions": {
+      "displayName": "Actions",
+      "icon": "✅",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "action", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "values": ["Project", "Task", "Habit"]},
+        {"name": "parent_action", "type": "uuid", "references": "actions"},
+        {"name": "status", "type": "enum", "values": ["Backlog", "Next", "In progress", "Blocked", "Done", "Dropped"]},
+        {"name": "priority", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "start", "type": "date"},
+        {"name": "due", "type": "date"},
+        {"name": "recurrence", "type": "string"},
+        {"name": "context", "type": "enum", "values": ["home", "pc", "phone", "gym", "office", "errands"]},
+        {"name": "energy", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "estimate", "type": "number", "unit": "minutes"},
+        {"name": "depends_on", "type": "array", "references": "actions"},
+        {"name": "blocked_by", "type": "text"},
+        {"name": "external_dependency", "type": "string"},
+        {"name": "linked_goal", "type": "uuid", "references": "goals"},
+        {"name": "next_review", "type": "date"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "metrics": {
+      "displayName": "Metrics & Measurements",
+      "icon": "📊",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "metric_name", "type": "string", "required": true},
+        {"name": "definition", "type": "text"},
+        {"name": "unit", "type": "string"},
+        {"name": "target_year", "type": "number"},
+        {"name": "target_quarter", "type": "number"},
+        {"name": "date", "type": "date"},
+        {"name": "value", "type": "number"},
+        {"name": "baseline", "type": "number"},
+        {"name": "source", "type": "enum", "values": ["manual", "app", "bank", "wearable"]},
+        {"name": "trend_note", "type": "text"},
+        {"name": "update_cadence", "type": "string"},
+        {"name": "owner", "type": "string"},
+        {"name": "priority", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "confidence_in_data", "type": "number", "min": 1, "max": 10},
+        {"name": "type", "type": "enum", "values": ["Lag", "Lead"]}
+      ]
+    },
+    "rules_principles": {
+      "displayName": "Rules & Principles",
+      "icon": "📜",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "rule", "type": "string", "required": true},
+        {"name": "category", "type": "enum", "values": ["Value", "Default Rule", "Heuristic"]},
+        {"name": "description", "type": "text"},
+        {"name": "effective_from", "type": "date"},
+        {"name": "review_date", "type": "date"},
+        {"name": "priority", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "active", "type": "boolean"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "limits_budgets": {
+      "displayName": "Limits & Budgets",
+      "icon": "💰",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "limit_name", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "values": ["Money", "Time", "Capacity", "Other"]},
+        {"name": "limit", "type": "string"},
+        {"name": "period", "type": "enum", "values": ["Daily", "Weekly", "Monthly", "Quarterly", "Annual"]},
+        {"name": "start", "type": "date"},
+        {"name": "end", "type": "date"},
+        {"name": "enforced", "type": "boolean"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "risks": {
+      "displayName": "Risks",
+      "icon": "⚠️",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "risk", "type": "string", "required": true},
+        {"name": "likelihood", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "impact", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "risk_appetite", "type": "string"},
+        {"name": "mitigation_plan", "type": "text"},
+        {"name": "early_warning_kpi", "type": "string"},
+        {"name": "trigger_signals", "type": "text"},
+        {"name": "owner", "type": "string"},
+        {"name": "status", "type": "enum", "values": ["Open", "Monitoring", "Closed"]},
+        {"name": "next_review", "type": "date"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "decisions": {
+      "displayName": "Decisions",
+      "icon": "🤔",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "topic", "type": "string", "required": true},
+        {"name": "options_considered", "type": "array"},
+        {"name": "criteria", "type": "array"},
+        {"name": "choice", "type": "string"},
+        {"name": "rationale", "type": "text"},
+        {"name": "decision_date", "type": "date"},
+        {"name": "follow_up_date", "type": "date"},
+        {"name": "outcome_notes", "type": "text"}
+      ]
+    },
+    "key_dates": {
+      "displayName": "Key Dates",
+      "icon": "📆",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "event", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "values": ["Deadline", "Renewal", "Review", "Milestone", "Appointment", "Payment"]},
+        {"name": "date", "type": "date"},
+        {"name": "reminder", "type": "number", "unit": "days"},
+        {"name": "related_to_type", "type": "enum", "values": ["goal", "action", "metric"]},
+        {"name": "related_to_id", "type": "uuid"},
+        {"name": "owner", "type": "string"},
+        {"name": "priority", "type": "enum", "values": ["Low", "Med", "High"]},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "resources": {
+      "displayName": "Resources",
+      "icon": "🔧",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "category", "type": "enum", "values": ["Guide", "Tool", "Account", "Subscription", "Contact", "Template", "Capability"]},
+        {"name": "provider", "type": "string"},
+        {"name": "link", "type": "string"},
+        {"name": "capability_level", "type": "string"},
+        {"name": "evidence_usage", "type": "text"},
+        {"name": "cost_monthly", "type": "number"},
+        {"name": "cost_annual", "type": "number"},
+        {"name": "renewal_date", "type": "date"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "playbooks": {
+      "displayName": "Playbooks",
+      "icon": "📖",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "playbook_name", "type": "string", "required": true},
+        {"name": "trigger", "type": "string"},
+        {"name": "steps", "type": "array"},
+        {"name": "minimum_viable_version", "type": "text"},
+        {"name": "owner", "type": "string"},
+        {"name": "review_cadence", "type": "string"},
+        {"name": "last_reviewed", "type": "date"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "assumptions_hypotheses": {
+      "displayName": "Assumptions & Hypotheses",
+      "icon": "💡",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "statement", "type": "string", "required": true},
+        {"name": "type", "type": "enum", "values": ["Assumption", "Hypothesis"]},
+        {"name": "area_goal_link", "type": "uuid", "references": "goals"},
+        {"name": "confidence", "type": "number", "min": 1, "max": 10},
+        {"name": "test_method", "type": "text"},
+        {"name": "success_metric", "type": "string"},
+        {"name": "due_date", "type": "date"},
+        {"name": "status", "type": "enum", "values": ["Untested", "Testing", "Validated", "Invalidated"]},
+        {"name": "result_notes", "type": "text"}
+      ]
+    },
+    "experiments": {
+      "displayName": "Experiments",
+      "icon": "🔬",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "experiment_name", "type": "string", "required": true},
+        {"name": "linked_hypothesis", "type": "uuid", "references": "assumptions_hypotheses"},
+        {"name": "protocol", "type": "text"},
+        {"name": "success_metric", "type": "string"},
+        {"name": "cost_resources", "type": "string"},
+        {"name": "start", "type": "date"},
+        {"name": "due", "type": "date"},
+        {"name": "status", "type": "enum", "values": ["Planned", "Running", "Complete"]},
+        {"name": "outcome", "type": "text"},
+        {"name": "next_step", "type": "text"}
+      ]
+    },
+    "reviews": {
+      "displayName": "Reviews",
+      "icon": "🔍",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "date", "type": "date", "required": true},
+        {"name": "cadence", "type": "enum", "values": ["Daily", "Weekly", "Monthly", "Quarterly", "Annual"]},
+        {"name": "wins", "type": "text"},
+        {"name": "misses", "type": "text"},
+        {"name": "next_tweak", "type": "text"},
+        {"name": "new_actions", "type": "array"},
+        {"name": "goal_confidence_delta", "type": "number", "min": -2, "max": 2},
+        {"name": "mood", "type": "number", "min": 1, "max": 10},
+        {"name": "energy", "type": "number", "min": 1, "max": 10},
+        {"name": "plan_fit", "type": "number", "min": 1, "max": 10},
+        {"name": "top_bottleneck", "type": "string"},
+        {"name": "notes", "type": "text"}
+      ]
+    },
+    "stakeholders": {
+      "displayName": "Stakeholders",
+      "icon": "👥",
+      "columns": [
+        {"name": "id", "type": "uuid", "primary": true},
+        {"name": "name", "type": "string", "required": true},
+        {"name": "role", "type": "string"},
+        {"name": "influence", "type": "string"},
+        {"name": "needs", "type": "text"},
+        {"name": "preferred_channel", "type": "string"},
+        {"name": "checkin_cadence", "type": "string"},
+        {"name": "next_checkin", "type": "date"},
+        {"name": "notes", "type": "text"}
+      ]
+    }
+  },
+  "views": {
+    "today": {
+      "displayName": "Today",
+      "icon": "☀️",
+      "category": "Daily & Weekly Execution",
+      "sourceTable": "actions",
+      "filters": [
+        {"field": "status", "operator": "in", "value": ["Next", "In progress"]},
+        {"field": "due", "operator": "eq", "value": "today"}
+      ],
+      "columns": ["action", "type", "context", "estimate", "linked_goal"],
+      "actions": ["mark_done", "snooze", "block"]
+    },
+    "this_week": {
+      "displayName": "This Week",
+      "icon": "📅",
+      "category": "Daily & Weekly Execution",
+      "sourceTables": ["actions", "key_dates"],
+      "filters": [
+        {"field": "due", "operator": "within", "value": 7}
+      ],
+      "groupBy": "due",
+      "columns": ["action", "priority", "estimate", "blocked_by"]
+    },
+    "habit_tracker": {
+      "displayName": "Habit Tracker",
+      "icon": "🔄",
+      "category": "Daily & Weekly Execution",
+      "sourceTable": "actions",
+      "filters": [
+        {"field": "type", "operator": "eq", "value": "Habit"}
+      ],
+      "columns": ["action", "recurrence", "last_done", "next_due"],
+      "layout": "grid"
+    },
+    "weekly_review": {
+      "displayName": "Weekly Review",
+      "icon": "📝",
+      "category": "Daily & Weekly Execution",
+      "sourceTables": ["reviews", "actions", "goals"],
+      "filters": [
+        {"field": "cadence", "operator": "eq", "value": "Weekly"}
+      ],
+      "template": ["wins", "misses", "next_tweak", "new_actions"]
+    },
+    "goal_tree": {
+      "displayName": "Goal Tree",
+      "icon": "🌳",
+      "category": "Planning & Alignment",
+      "sourceTables": ["goals", "actions"],
+      "groupBy": "timeframe",
+      "columns": ["goal", "key_results", "confidence", "status"],
+      "layout": "tree"
+    },
+    "quarter_plan": {
+      "displayName": "Quarter Plan",
+      "icon": "📊",
+      "category": "Planning & Alignment",
+      "sourceTables": ["year_roadmap", "goals", "actions"],
+      "filters": [
+        {"field": "timeframe", "operator": "eq", "value": "Quarter"}
+      ]
+    },
+    "annual_dashboard": {
+      "displayName": "Annual Dashboard",
+      "icon": "📈",
+      "category": "Planning & Alignment",
+      "sourceTables": ["year_roadmap", "metrics"],
+      "widgets": ["kr_progress", "kpi_trends", "wont_dos", "capacity"]
+    },
+    "backlog": {
+      "displayName": "Backlog (Inbox)",
+      "icon": "📥",
+      "category": "Planning & Alignment",
+      "sourceTable": "actions",
+      "filters": [
+        {"field": "status", "operator": "eq", "value": "Backlog"}
+      ],
+      "actions": ["promote", "assign_due", "link_goal", "delete"]
+    },
+    "kpi_board": {
+      "displayName": "KPI Board",
+      "icon": "📊",
+      "category": "Numbers & Limits",
+      "sourceTable": "metrics",
+      "filters": [
+        {"field": "priority", "operator": "ne", "value": "Low"}
+      ],
+      "columns": ["metric_name", "target_year", "target_quarter", "value", "date", "confidence_in_data"],
+      "widgets": ["sparkline", "delta"]
+    },
+    "budget_limits": {
+      "displayName": "Budget & Limits",
+      "icon": "💰",
+      "category": "Numbers & Limits",
+      "sourceTable": "limits_budgets",
+      "columns": ["limit_name", "period", "enforced", "limit", "notes"],
+      "widgets": ["progress_bar"]
+    },
+    "risk_radar": {
+      "displayName": "Risk Radar",
+      "icon": "⚠️",
+      "category": "Risk & Decisions",
+      "sourceTable": "risks",
+      "groupBy": ["likelihood", "impact"],
+      "columns": ["risk", "early_warning_kpi", "next_review", "owner"],
+      "layout": "matrix"
+    },
+    "decision_log": {
+      "displayName": "Decision Log",
+      "icon": "📋",
+      "category": "Risk & Decisions",
+      "sourceTable": "decisions",
+      "sortBy": {"field": "decision_date", "order": "desc"},
+      "columns": ["topic", "choice", "rationale", "follow_up_date", "outcome_notes"]
+    },
+    "hypotheses_experiments": {
+      "displayName": "Hypotheses & Experiments",
+      "icon": "🔬",
+      "category": "Experiments & Learning",
+      "sourceTables": ["assumptions_hypotheses", "experiments"],
+      "groupBy": "status",
+      "layout": "dual_panel"
+    },
+    "experiment_board": {
+      "displayName": "Experiment Board",
+      "icon": "🧪",
+      "category": "Experiments & Learning",
+      "sourceTable": "experiments",
+      "groupBy": "status",
+      "columns": ["experiment_name", "success_metric", "cost_resources", "due", "outcome"]
+    },
+    "calendar": {
+      "displayName": "Calendar",
+      "icon": "📆",
+      "category": "Ops & Reference",
+      "sourceTables": ["key_dates", "actions"],
+      "layout": "month",
+      "columns": ["event", "related_to_type", "related_to_id"]
+    },
+    "resources_shelf": {
+      "displayName": "Resources Shelf",
+      "icon": "🔧",
+      "category": "Ops & Reference",
+      "sourceTable": "resources",
+      "groupBy": "category",
+      "columns": ["name", "provider", "link", "cost_monthly", "cost_annual", "renewal_date", "capability_level"]
+    },
+    "playbooks_list": {
+      "displayName": "Playbooks",
+      "icon": "📖",
+      "category": "Ops & Reference",
+      "sourceTable": "playbooks",
+      "columns": ["playbook_name", "trigger", "steps", "minimum_viable_version", "owner", "last_reviewed"]
+    },
+    "stakeholder_map": {
+      "displayName": "Stakeholder Map",
+      "icon": "👥",
+      "category": "Ops & Reference",
+      "sourceTable": "stakeholders",
+      "columns": ["name", "influence", "needs", "next_checkin"]
+    },
+    "forecast_30day": {
+      "displayName": "30-Day Forecast",
+      "icon": "🔮",
+      "category": "Ops & Reference",
+      "sourceTables": ["actions", "key_dates", "limits_budgets"],
+      "filters": [
+        {"field": "date", "operator": "within", "value": 30}
+      ],
+      "columns": ["event", "estimate", "priority"]
+    },
+    "my_tasks": {
+      "displayName": "My Tasks",
+      "icon": "📋",
+      "category": "Daily & Weekly Execution",
+      "sourceTable": "actions",
+      "layout": "kanban",
+      "groupBy": "status",
+      "columns": ["action", "priority", "due", "estimate", "linked_goal"],
+      "cardTitle": "action",
+      "cardSubtitle": "priority",
+      "cardBadges": ["status", "priority"]
+    },
+    "roadmap": {
+      "displayName": "Roadmap",
+      "icon": "🗺️",
+      "category": "Planning & Alignment",
+      "sourceTable": "goals",
+      "layout": "timeline",
+      "dateField": "due",
+      "startDateField": "start",
+      "endDateField": "due",
+      "titleField": "goal",
+      "columns": ["goal", "start", "due", "status", "confidence"]
+    },
+    "progress_tracking": {
+      "displayName": "Progress Tracking",
+      "icon": "📈",
+      "category": "Numbers & Limits",
+      "sourceTable": "metrics",
+      "layout": "chart",
+      "chartType": "line",
+      "xField": "date",
+      "yField": "value",
+      "groupByField": "metric_name",
+      "filters": [
+        {"field": "priority", "operator": "ne", "value": "Low"}
+      ]
+    },
+    "upcoming_events": {
+      "displayName": "Upcoming Events",
+      "icon": "📆",
+      "category": "Ops & Reference",
+      "sourceTable": "key_dates",
+      "layout": "calendar",
+      "dateField": "date",
+      "titleField": "event",
+      "columns": ["event", "type", "date", "priority"]
+    },
+    "my_resources": {
+      "displayName": "My Resources",
+      "icon": "🎨",
+      "category": "Ops & Reference",
+      "sourceTable": "resources",
+      "layout": "gallery",
+      "imageField": "icon",
+      "titleField": "name",
+      "subtitleField": "category",
+      "columns": ["name", "category", "provider", "cost_monthly"]
+    },
+    "overview": {
+      "displayName": "Overview",
+      "icon": "📊",
+      "category": "Planning & Alignment",
+      "sourceTables": ["goals", "actions", "metrics"],
+      "layout": "dashboard",
+      "widgets": [
+        {"type": "chart", "title": "Goal Confidence", "dataSource": "goals", "chartType": "bar", "field": "confidence"},
+        {"type": "chart", "title": "Actions by Status", "dataSource": "actions", "chartType": "pie", "field": "status"},
+        {"type": "chart", "title": "Metrics Trend", "dataSource": "metrics", "chartType": "line", "xField": "date", "yField": "value"}
+      ]
+    },
+    "running_experiments": {
+      "displayName": "Running Experiments",
+      "icon": "🔬",
+      "category": "Experiments & Learning",
+      "sourceTable": "experiments",
+      "layout": "timeline",
+      "startDateField": "start",
+      "endDateField": "due",
+      "titleField": "experiment_name",
+      "columns": ["experiment_name", "status", "start", "due", "outcome"]
+    },
+    "big_picture": {
+      "displayName": "Big Picture",
+      "icon": "🌳",
+      "category": "Planning & Alignment",
+      "sourceTable": "goals",
+      "layout": "hierarchy",
+      "parentField": "parent_goal",
+      "titleField": "goal",
+      "childrenField": "linked_actions",
+      "childSourceTable": "actions",
+      "columns": ["goal", "timeframe", "status", "confidence"],
+      "expandable": true,
+      "showConnections": true
+    },
+    "project_breakdown": {
+      "displayName": "Project Breakdown",
+      "icon": "🗂️",
+      "category": "Daily & Weekly Execution",
+      "sourceTable": "actions",
+      "layout": "hierarchy",
+      "parentField": "parent_action",
+      "titleField": "action",
+      "columns": ["action", "type", "status", "priority", "due"],
+      "expandable": true,
+      "showDependencies": true
+    }
+  },
+  "relationships": [
+    {"from": "actions", "field": "linked_goal", "to": "goals"},
+    {"from": "actions", "field": "parent_action", "to": "actions"},
+    {"from": "actions", "field": "depends_on", "to": "actions"},
+    {"from": "goals", "field": "linked_actions", "to": "actions"},
+    {"from": "experiments", "field": "linked_hypothesis", "to": "assumptions_hypotheses"},
+    {"from": "assumptions_hypotheses", "field": "area_goal_link", "to": "goals"},
+    {"from": "key_dates", "field": "related_to_id", "to": ["goals", "actions", "metrics"]}
+  ]
+}

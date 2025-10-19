@@ -1,0 +1,42 @@
+[
+  {
+    "id": "playbook-1",
+    "playbook_name": "Weekly Review",
+    "trigger": "Every Sunday evening",
+    "steps": [
+      "Review calendar for past week",
+      "Check off completed actions",
+      "Review goals progress",
+      "Note wins and misses",
+      "Plan top 3 priorities for next week",
+      "Schedule time blocks for priorities"
+    ],
+    "minimum_viable_version": "Just check completed actions and set 3 priorities",
+    "owner": "Me",
+    "review_cadence": "Monthly",
+    "last_reviewed": "2025-01-01",
+    "notes": "Takes about 30 minutes",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "playbook-2",
+    "playbook_name": "Morning Routine",
+    "trigger": "Every morning on waking",
+    "steps": [
+      "Drink water",
+      "Review daily goals",
+      "Exercise 30 min",
+      "Shower",
+      "Healthy breakfast",
+      "Plan top 3 tasks for day"
+    ],
+    "minimum_viable_version": "Water + exercise + breakfast",
+    "owner": "Me",
+    "review_cadence": "Quarterly",
+    "last_reviewed": "2025-01-01",
+    "notes": "90 minute routine",
+    "category_id": "career",
+    "workspace_id": "company"
+  }
+]

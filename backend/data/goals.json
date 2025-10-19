@@ -1,0 +1,70 @@
+[
+  {
+    "id": "goal-1",
+    "goal": "Run a marathon",
+    "timeframe": "Annual",
+    "why": "Improve cardiovascular health and achieve a personal challenge",
+    "start": "2025-01-01",
+    "due": "2025-12-31",
+    "priority": "High",
+    "confidence": 7,
+    "status": "Active",
+    "key_results": [
+      "Complete 3 half marathons",
+      "Run 1000km total",
+      "Finish marathon under 4 hours"
+    ],
+    "linked_actions": [
+      "action-1",
+      "action-2"
+    ],
+    "notes": "Training plan from coach Sarah",
+    "category_id": "nutrition",
+    "workspace_id": "life"
+  },
+  {
+    "id": "goal-2",
+    "goal": "Launch new product feature",
+    "timeframe": "Quarter",
+    "why": "Increase user engagement by 25%",
+    "start": "2025-01-01",
+    "due": "2025-03-31",
+    "priority": "High",
+    "confidence": 8,
+    "status": "Active",
+    "key_results": [
+      "Complete design by end of Jan",
+      "Beta launch in Feb",
+      "Full launch in March"
+    ],
+    "linked_actions": [
+      "action-3",
+      "action-4"
+    ],
+    "notes": "Approved by leadership team",
+    "category_id": "exercise",
+    "workspace_id": "life"
+  },
+  {
+    "id": "goal-3",
+    "goal": "Read 24 books",
+    "timeframe": "Annual",
+    "why": "Expand knowledge and improve focus",
+    "start": "2025-01-01",
+    "due": "2025-12-31",
+    "priority": "Med",
+    "confidence": 9,
+    "status": "Active",
+    "key_results": [
+      "2 books per month",
+      "Mix of fiction and non-fiction",
+      "Write summary for each"
+    ],
+    "linked_actions": [
+      "action-5"
+    ],
+    "notes": "Book list curated",
+    "category_id": "finance",
+    "workspace_id": "company"
+  }
+]

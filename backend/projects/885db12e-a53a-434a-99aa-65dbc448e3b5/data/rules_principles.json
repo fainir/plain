@@ -1,0 +1,41 @@
+[
+  {
+    "id": "rule-1",
+    "rule": "Never skip morning exercise",
+    "category": "Default Rule",
+    "description": "Exercise is non-negotiable for mental and physical health",
+    "effective_from": "2025-01-01",
+    "review_date": "2025-06-01",
+    "priority": "High",
+    "active": true,
+    "notes": "Only exception: injury or illness",
+    "category_id": "health",
+    "workspace_id": "life"
+  },
+  {
+    "id": "rule-2",
+    "rule": "Always choose growth over comfort",
+    "category": "Value",
+    "description": "When facing a choice, pick the option that challenges me",
+    "effective_from": "2024-01-01",
+    "review_date": "2025-12-31",
+    "priority": "High",
+    "active": true,
+    "notes": "Core personal value",
+    "category_id": "finance",
+    "workspace_id": "company"
+  },
+  {
+    "id": "rule-3",
+    "rule": "Two-minute rule",
+    "category": "Heuristic",
+    "description": "If it takes less than 2 minutes, do it now",
+    "effective_from": "2024-06-01",
+    "review_date": "2025-12-31",
+    "priority": "Med",
+    "active": true,
+    "notes": "Helps prevent task buildup",
+    "category_id": "health",
+    "workspace_id": "life"
+  }
+]

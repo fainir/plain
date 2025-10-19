@@ -1,0 +1,29 @@
+[
+  {
+    "id": "roadmap-2025",
+    "year": 2025,
+    "theme": "Growth & Health",
+    "top_priorities": [
+      "Run marathon",
+      "Launch 2 major features",
+      "Read 24 books"
+    ],
+    "wont_do": [
+      "Take on freelance projects",
+      "Buy expensive gadgets",
+      "Skip workouts"
+    ],
+    "q1_focus": "Build fitness foundation, launch feature v1",
+    "q2_focus": "Half marathon, feature improvements",
+    "q3_focus": "Marathon training intensifies, feature v2",
+    "q4_focus": "Marathon completion, year review",
+    "capacity": "20h/week for side projects, \u20ac5000 annual budget",
+    "success_criteria": [
+      "Marathon completed",
+      "Features live and performing",
+      "24 books read"
+    ],
+    "category_id": null,
+    "workspace_id": "life"
+  }
+]

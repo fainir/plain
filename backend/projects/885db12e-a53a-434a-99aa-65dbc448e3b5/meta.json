@@ -1,0 +1,21 @@
+{
+  "id": "885db12e-a53a-434a-99aa-65dbc448e3b5",
+  "name": "Finance & Budget Plan",
+  "category": "finance",
+  "createdAt": "2025-10-16T16:25:53.963914",
+  "updatedAt": "2025-10-16T16:25:53.963966",
+  "workspaces": [
+    {
+      "id": "life",
+      "name": "Life Planner",
+      "icon": "🌟",
+      "description": "Personal life planning"
+    },
+    {
+      "id": "company",
+      "name": "Company Planner",
+      "icon": "🏢",
+      "description": "Business and company planning"
+    }
+  ]
+}
