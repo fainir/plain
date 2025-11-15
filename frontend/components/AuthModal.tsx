@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase/client';
 
 interface AuthModalProps {
@@ -10,12 +10,24 @@ interface AuthModalProps {
   defaultTab?: 'signin' | 'signup';
 }
 
-export default function AuthModal({ isOpen, onClose, onSuccess, defaultTab = 'signup' }: AuthModalProps) {
+export default function AuthModal({
+  isOpen,
+  onClose,
+  onSuccess,
+  defaultTab = 'signup'
+}: AuthModalProps) {
   const [activeTab, setActiveTab] = useState<'signin' | 'signup'>(defaultTab);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [demoMessage, setDemoMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab, isOpen]);
 
   if (!isOpen) return null;
 
@@ -48,6 +60,72 @@ export default function AuthModal({ isOpen, onClose, onSuccess, defaultTab = 'si
       onSuccess();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to sign up');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCreateDemoUser = async () => {
+    setIsLoading(true);
+    setError(null);
+    setDemoMessage(null);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/dev/demo-user', {
+        method: 'POST'
+      });
+
+      const result = await response.json();
+      if (!response.ok || result.error) {
+        throw new Error(result.error || 'Failed to create demo user');
+      }
+
+      const { email: demoEmail, password: demoPassword, access_token: accessToken, refresh_token: refreshToken } = result;
+
+      const { error: sessionError } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      });
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+      const guestWorkspaceId =
+        typeof window !== 'undefined' ? localStorage.getItem('guest_workspace_id') : null;
+
+      if (guestWorkspaceId) {
+        const associateResponse = await fetch('http://localhost:8000/api/workspaces/associate-guest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+          },
+          body: JSON.stringify({ workspaceId: guestWorkspaceId })
+        });
+
+        if (associateResponse.ok) {
+          localStorage.removeItem('guest_workspace_id');
+          localStorage.removeItem('plain_guest_plan');
+          localStorage.removeItem('plain_guest_plan_workspace');
+        } else {
+          const errorPayload = await associateResponse.json().catch(() => ({}));
+          console.warn('Failed to associate guest workspace', errorPayload);
+        }
+      }
+
+      const credentialsText = `Email: ${demoEmail}\nPassword: ${demoPassword}`;
+      try {
+        await navigator.clipboard.writeText(credentialsText);
+        setDemoMessage('Demo credentials copied to clipboard.');
+      } catch {
+        setDemoMessage(credentialsText);
+      }
+
+      console.log('Demo user created', { email: demoEmail });
+      onSuccess();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to create demo user');
     } finally {
       setIsLoading(false);
     }
@@ -140,6 +218,22 @@ export default function AuthModal({ isOpen, onClose, onSuccess, defaultTab = 'si
 
         {/* Form */}
         <form onSubmit={activeTab === 'signup' ? handleSignUp : handleSignIn} className="p-6">
+          <div className="mb-4">
+            <button
+              type="button"
+              onClick={handleCreateDemoUser}
+              disabled={isLoading}
+              className="w-full px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Preparing demo user...' : 'Create Demo User'}
+            </button>
+            {demoMessage && (
+              <div className="mt-2 text-xs text-gray-600 dark:text-gray-300 break-all">
+                {demoMessage}
+              </div>
+            )}
+          </div>
+
           {error && (
             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
               {error}

@@ -65,7 +65,6 @@ export default function Home() {
 
   const handleAuthSuccess = () => {
     setShowAuthModal(false);
-    router.push('/auth/persist-plan');
   };
 
   const openAuthModal = (tab: 'signin' | 'signup' = 'signup') => {

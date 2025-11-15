@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TopBar from '@/components/TopBar';
 import FileExplorer from '@/components/FileExplorer';
 import DocumentViewer from '@/components/DocumentViewer';
 import DataViewer from '@/components/DataViewer';
 import AIChat from '@/components/AIChat';
 import { useParams } from 'next/navigation';
+import { supabase } from '@/lib/supabase/client';
 
 export default function PlannerPage() {
   const params = useParams();
@@ -17,6 +18,22 @@ export default function PlannerPage() {
   const [selectedItem, setSelectedItem] = useState<{type: 'table' | 'view', id: string} | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const syncSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session?.user);
+    };
+
+    syncSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   return (
     <div className="h-screen flex flex-col overflow-hidden">
@@ -37,6 +54,7 @@ export default function PlannerPage() {
             selectedCategories={selectedCategories}
             onCategoryChange={setSelectedCategories}
             onWorkspaceChange={setSelectedWorkspace}
+            isAuthenticated={isAuthenticated}
           />
         </aside>
 
@@ -58,6 +76,7 @@ export default function PlannerPage() {
               id={selectedItem.id}
               selectedCategories={selectedCategories}
               selectedWorkspace={selectedWorkspace}
+              isAuthenticated={isAuthenticated}
             />
           ) : (
             <DocumentViewer />

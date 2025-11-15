@@ -1,14 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useState, useEffect, useCallback } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import TopBar from '@/components/TopBar';
 import FileExplorer from '@/components/FileExplorer';
 import DataViewer from '@/components/DataViewer';
 import AIChat from '@/components/AIChat';
+import { supabase } from '@/lib/supabase/client';
+import { useGuestWorkspaceAssociation } from '@/hooks/useGuestWorkspaceAssociation';
 
 export default function DocumentPage() {
   const params = useParams();
+  const router = useRouter();
   const workspaceId = params.workspaceId as string;
   const docId = params.docId as string;
 
@@ -17,10 +20,47 @@ export default function DocumentPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<string | null>(null);
   const [docType, setDocType] = useState<'table' | 'view'>('view');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     setSelectedWorkspace(workspaceId);
   }, [workspaceId]);
+
+  useEffect(() => {
+    const syncSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session?.user);
+      if (!session?.user && typeof window !== 'undefined') {
+        const stored =
+          localStorage.getItem('guest_workspace_id') ||
+          localStorage.getItem('plain_guest_plan_workspace');
+        if (stored !== workspaceId) {
+          localStorage.setItem('plain_guest_plan_workspace', workspaceId);
+        }
+      }
+    };
+
+    syncSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const authed = !!session?.user;
+      setIsAuthenticated(authed);
+      if (!authed && typeof window !== 'undefined') {
+        localStorage.setItem('plain_guest_plan_workspace', workspaceId);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [workspaceId]);
+
+  const handleAssociation = useCallback((associatedId: string) => {
+    setSelectedWorkspace(associatedId);
+    if (associatedId && associatedId !== workspaceId) {
+      router.push(`/p/${associatedId}`);
+    }
+  }, [router, workspaceId]);
+
+  useGuestWorkspaceAssociation(isAuthenticated, { onAssociated: handleAssociation });
 
   // Determine if docId is a table or view by checking with the API
   useEffect(() => {
@@ -48,12 +88,14 @@ export default function DocumentPage() {
         >
           <FileExplorer
             projectId={workspaceId}
+            selectedWorkspace={selectedWorkspace ?? workspaceId}
             onSelect={(type, id) => {
               // Navigation handled by router
             }}
             selectedCategories={selectedCategories}
             onCategoryChange={setSelectedCategories}
             onWorkspaceChange={setSelectedWorkspace}
+            isAuthenticated={isAuthenticated}
           />
         </aside>
 
@@ -74,6 +116,7 @@ export default function DocumentPage() {
             id={docId}
             selectedCategories={selectedCategories}
             selectedWorkspace={selectedWorkspace}
+            isAuthenticated={isAuthenticated}
           />
         </main>
 

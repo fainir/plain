@@ -5,23 +5,53 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAIChat } from '@/hooks/useAIChat';
 import AuthModal from '@/components/AuthModal';
+import { supabase } from '@/lib/supabase/client';
 
 export default function FoodPlannerPage() {
   const router = useRouter();
   const [input, setInput] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authDefaultTab, setAuthDefaultTab] = useState<'signin' | 'signup'>('signup');
-  const { messages, isLoading, guestWorkspaceId, sendMessage } = useAIChat('food');
+  const { messages, isLoading, guestWorkspaceId, sendMessage, isAuthenticated } = useAIChat('food');
 
+  // Redirect to workspace after plan is created
   useEffect(() => {
     if (guestWorkspaceId) {
-      router.push(`/guest/${guestWorkspaceId}`);
+      router.push(`/p/${guestWorkspaceId}`);
     }
   }, [guestWorkspaceId, router]);
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = async () => {
     setShowAuthModal(false);
-    router.push('/auth/persist-plan');
+
+    // If there's a guest workspace, associate it with the authenticated user
+    if (guestWorkspaceId) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session) {
+          await fetch('http://localhost:8000/api/workspaces/associate-guest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({
+              workspaceId: guestWorkspaceId
+            })
+          });
+
+          console.log('Guest workspace associated with user');
+        }
+      } catch (error) {
+        console.error('Error associating workspace:', error);
+      }
+    }
+
+    // Stay on the same page - don't redirect
+    if (guestWorkspaceId) {
+      router.push(`/p/${guestWorkspaceId}`);
+    }
   };
 
   const openAuthModal = (tab: 'signin' | 'signup' = 'signup') => {
@@ -156,7 +186,7 @@ export default function FoodPlannerPage() {
           </div>
 
           {/* Sign-up prompt banner */}
-          {messages.length > 0 && (
+          {messages.length > 0 && !isAuthenticated && (
             <div className="border-t border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-950 p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

@@ -5,23 +5,46 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAIChat } from '@/hooks/useAIChat';
 import AuthModal from '@/components/AuthModal';
+import { supabase } from '@/lib/supabase/client';
 
 export default function FitnessPlannerPage() {
   const router = useRouter();
   const [input, setInput] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authDefaultTab, setAuthDefaultTab] = useState<'signin' | 'signup'>('signup');
-  const { messages, isLoading, guestWorkspaceId, sendMessage } = useAIChat('fitness');
+  const { messages, isLoading, guestWorkspaceId, sendMessage, isAuthenticated } = useAIChat('fitness');
 
+  // Redirect to workspace after plan is created
   useEffect(() => {
     if (guestWorkspaceId) {
-      router.push(`/guest/${guestWorkspaceId}`);
+      router.push(`/p/${guestWorkspaceId}`);
     }
   }, [guestWorkspaceId, router]);
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = async () => {
     setShowAuthModal(false);
-    router.push('/auth/persist-plan');
+
+    if (guestWorkspaceId) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          await fetch('http://localhost:8000/api/workspaces/associate-guest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({
+              workspaceId: guestWorkspaceId
+            })
+          });
+        }
+      } catch (error) {
+        console.error('Error associating workspace:', error);
+      }
+
+      router.push(`/p/${guestWorkspaceId}`);
+    }
   };
 
   const openAuthModal = (tab: 'signin' | 'signup' = 'signup') => {
@@ -156,7 +179,7 @@ export default function FitnessPlannerPage() {
           </div>
 
           {/* Sign-up prompt banner */}
-          {messages.length > 0 && (
+          {messages.length > 0 && !isAuthenticated && (
             <div className="border-t border-orange-200 dark:border-orange-900 bg-orange-50 dark:bg-orange-950 p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

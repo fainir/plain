@@ -21,7 +21,6 @@ def get_category_descendants(category_id: str, all_categories: list) -> list:
     # Recursively get descendants of each child
     for child in children:
         descendants.extend(get_category_descendants(child['id'], all_categories))
-
     return descendants
 
 

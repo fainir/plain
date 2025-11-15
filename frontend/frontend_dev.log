@@ -1,0 +1,205 @@
+
+> frontend@0.1.0 dev
+> next dev --hostname 0.0.0.0 --port 3000
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/nirfeinstein/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /Users/nirfeinstein/Documents/GitHub/plain/frontend/package-lock.json
+
+   ▲ Next.js 15.5.5
+   - Local:        http://localhost:3000
+   - Network:      http://0.0.0.0:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.2s
+ ✓ Compiled /middleware in 500ms (187 modules)
+Middleware - Path: /assistant Has Session: false
+ ○ Compiling /assistant ...
+ ✓ Compiled /assistant in 1684ms (561 modules)
+ GET /assistant 200 in 3033ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 105ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 121ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 211ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 1550ms (354 modules)
+ GET /favicon.ico 200 in 1966ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 436ms
+ GET /favicon.ico 200 in 61ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 129ms
+ GET /favicon.ico 200 in 110ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 106ms
+ GET /favicon.ico 200 in 79ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 96ms
+ GET /favicon.ico 200 in 67ms
+ ✓ Compiled in 947ms (575 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 174ms
+ GET /assistant?role=human 200 in 180ms
+ ✓ Compiled in 410ms (575 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 128ms
+ GET /assistant 200 in 134ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 349ms
+ ✓ Compiled /favicon.ico in 364ms (354 modules)
+ GET /favicon.ico 200 in 547ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 120ms
+ GET /favicon.ico 200 in 60ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 38ms
+ GET /favicon.ico 200 in 40ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 39ms
+ GET /favicon.ico 200 in 64ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 102ms
+ GET /favicon.ico 200 in 82ms
+ ✓ Compiled in 1452ms (575 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /assistant?role=human 200 in 531ms
+ GET /assistant 200 in 542ms
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 219ms
+ GET /assistant?role=human 200 in 220ms
+ ✓ Compiled /favicon.ico in 177ms (354 modules)
+ GET /favicon.ico 200 in 554ms
+ GET /favicon.ico 200 in 8ms
+ ✓ Compiled in 526ms (592 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 131ms
+ GET /assistant?role=human 200 in 132ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 181ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 90ms
+ GET /favicon.ico 200 in 132ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 40ms
+ GET /favicon.ico 200 in 48ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 75ms
+ GET /favicon.ico 200 in 67ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 55ms
+ GET /favicon.ico 200 in 26ms
+ ✓ Compiled in 407ms (404 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ ✓ Compiled /_not-found in 252ms (551 modules)
+ GET /assistant?role=human 404 in 388ms
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 404 in 391ms
+ GET /assistant 404 in 27ms
+ GET /assistant?role=human 404 in 30ms
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 404 in 145ms
+ GET /assistant 404 in 148ms
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ ○ Compiling /assistant ...
+ ✓ Compiled /assistant in 1033ms (753 modules)
+ GET /assistant?role=human 200 in 825ms
+ GET /assistant 200 in 826ms
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 26ms
+ GET /assistant?role=human 200 in 26ms
+ ✓ Compiled in 467ms (575 modules)
+Middleware - Path: /assistant Has Session: false
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 88ms
+ GET /assistant 200 in 91ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 160ms
+ ✓ Compiled /favicon.ico in 282ms (354 modules)
+ GET /favicon.ico 200 in 407ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 147ms
+ GET /favicon.ico 200 in 32ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 102ms
+ GET /favicon.ico 200 in 55ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 49ms
+ GET /favicon.ico 200 in 34ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 162ms
+ GET /favicon.ico 200 in 184ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 63ms
+ GET /favicon.ico 200 in 60ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 56ms
+ GET /favicon.ico 200 in 22ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 56ms
+ GET /favicon.ico 200 in 44ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 98ms
+ GET /favicon.ico 200 in 121ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 58ms
+ GET /favicon.ico 200 in 35ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 121ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 69ms
+ GET /favicon.ico 200 in 37ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 63ms
+ GET /favicon.ico 200 in 30ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 83ms
+ GET /favicon.ico 200 in 37ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 68ms
+ GET /favicon.ico 200 in 14ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 39ms
+ GET /favicon.ico 200 in 30ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 70ms
+ GET /favicon.ico 200 in 41ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 46ms
+ GET /favicon.ico 200 in 20ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 107ms
+ GET /favicon.ico 200 in 33ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 196ms
+ GET /favicon.ico 200 in 43ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 80ms
+ GET /favicon.ico 200 in 43ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant 200 in 38ms
+ GET /favicon.ico 200 in 78ms
+Middleware - Path: /assistant Has Session: false
+ GET /assistant?role=human 200 in 44ms
+ GET /favicon.ico 200 in 25ms
+Middleware - Path: / Has Session: false
+ ○ Compiling / ...
+ ✓ Compiled / in 2.5s (766 modules)
+[?25h

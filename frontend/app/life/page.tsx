@@ -5,26 +5,49 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAIChat } from '@/hooks/useAIChat';
 import AuthModal from '@/components/AuthModal';
+import { supabase } from '@/lib/supabase/client';
 
 export default function LifePlannerPage() {
   const router = useRouter();
   const [input, setInput] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authDefaultTab, setAuthDefaultTab] = useState<'signin' | 'signup'>('signup');
-  const { messages, isLoading, guestWorkspaceId, sendMessage } = useAIChat('life');
+  const { messages, isLoading, guestWorkspaceId, sendMessage, isAuthenticated } = useAIChat('life');
 
-  // Redirect to guest workspace view when workspace is created
+  // Redirect to workspace after plan is created
   useEffect(() => {
     if (guestWorkspaceId) {
-      console.log('Redirecting to guest workspace:', guestWorkspaceId);
-      router.push(`/guest/${guestWorkspaceId}`);
+      router.push(`/p/${guestWorkspaceId}`);
     }
   }, [guestWorkspaceId, router]);
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = async () => {
     setShowAuthModal(false);
-    // Persist guest plan if exists
-    router.push('/auth/persist-plan');
+
+    // If there's a guest workspace, associate it with the authenticated user
+    if (guestWorkspaceId) {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session) {
+          await fetch('http://localhost:8000/api/workspaces/associate-guest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({
+              workspaceId: guestWorkspaceId
+            })
+          });
+
+          console.log('Guest workspace associated with user');
+        }
+      } catch (error) {
+        console.error('Error associating workspace:', error);
+      }
+      router.push(`/p/${guestWorkspaceId}`);
+    }
   };
 
   const openAuthModal = (tab: 'signin' | 'signup' = 'signup') => {
@@ -206,7 +229,7 @@ export default function LifePlannerPage() {
           </div>
 
           {/* Sign-up prompt banner - shows when user has messages */}
-          {messages.length > 0 && (
+          {messages.length > 0 && !isAuthenticated && (
             <div className="border-t border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950 p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">

@@ -20,17 +20,61 @@ export default function PersistPlanPage() {
           return;
         }
 
-        // Check if there's a guest plan in localStorage
+        // Check if there's a guest workspace ID (from /guest/[workspaceId] page)
+        const guestWorkspaceId = localStorage.getItem('guest_workspace_id');
+
+        if (guestWorkspaceId) {
+          // Associate existing guest workspace with user
+          setStatus('persisting');
+
+          const response = await fetch('http://localhost:8000/api/workspaces/associate-guest', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`
+            },
+            body: JSON.stringify({
+              workspaceId: guestWorkspaceId
+            })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || 'Failed to associate workspace');
+          }
+
+          const result = await response.json();
+
+          if (!result || !result.workspace || !result.workspace.id) {
+            throw new Error('Invalid response from server');
+          }
+
+          const workspaceId = result.workspace.id;
+
+          // Clear the guest workspace ID
+          localStorage.removeItem('guest_workspace_id');
+          localStorage.removeItem('plain_guest_plan');
+
+          // Redirect to the workspace
+          setStatus('redirecting');
+          router.push(`/p/${workspaceId}`);
+          return;
+        }
+
+        // Check if there's a guest plan in localStorage (old flow - will be deprecated)
         const guestPlan = getGuestPlan();
 
         // If no guest plan, just redirect to home
         if (!guestPlan || !guestPlan.messages || guestPlan.messages.length === 0) {
+          console.log('No guest plan found, redirecting to home');
           setStatus('redirecting');
-          router.push('/');
+          setTimeout(() => {
+            router.push('/');
+          }, 500);
           return;
         }
 
-        // Persist the guest plan
+        // Persist the guest plan (old flow)
         setStatus('persisting');
 
         const response = await fetch('http://localhost:8000/api/workspaces/persist-guest-plan', {
@@ -46,10 +90,16 @@ export default function PersistPlanPage() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to persist guest plan');
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to persist guest plan');
         }
 
         const result = await response.json();
+
+        if (!result || !result.workspace || !result.workspace.id) {
+          throw new Error('Invalid response from server');
+        }
+
         const workspaceId = result.workspace.id;
 
         // Clear the guest plan from localStorage

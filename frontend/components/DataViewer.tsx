@@ -7,7 +7,7 @@ import TimelineLayout from './layouts/TimelineLayout';
 import GalleryLayout from './layouts/GalleryLayout';
 import ChartLayout from './layouts/ChartLayout';
 import HierarchyLayout from './layouts/HierarchyLayout';
-import { supabase } from '@/lib/supabase/client';
+import { getAccessToken } from '@/lib/supabase/getAccessToken';
 
 interface Column {
   name: string;
@@ -40,9 +40,10 @@ interface DataViewerProps {
   id: string;
   selectedCategories?: string[];
   selectedWorkspace?: string | null;
+  isAuthenticated?: boolean;
 }
 
-export default function DataViewer({ projectId, type, id, selectedCategories, selectedWorkspace }: DataViewerProps) {
+export default function DataViewer({ projectId, type, id, selectedCategories, selectedWorkspace, isAuthenticated = false }: DataViewerProps) {
   const [schema, setSchema] = useState<TableSchema | ViewSchema | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,14 +59,21 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
       setError(null);
 
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-
         let endpoint: string;
-        let headers: any = {};
+        const headers: Record<string, string> = {};
 
-        // Use workspace endpoints if workspace is selected and session exists
-        if (selectedWorkspace && session) {
-          headers = { 'Authorization': `Bearer ${session.access_token}` };
+        // Use workspace endpoints if workspace is selected (guest mode supported without session)
+        if (selectedWorkspace) {
+          const token = await getAccessToken({ requireAuth: isAuthenticated });
+          if (isAuthenticated && !token) {
+            setError('Unable to authenticate. Please refresh and try again.');
+            setLoading(false);
+            return;
+          }
+
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
 
           if (type === 'table') {
             endpoint = `/api/workspaces/${selectedWorkspace}/data/${id}`;
@@ -86,9 +94,6 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
           endpoint = type === 'table' ? `/api/projects/${projectId}/data/${id}` : `/api/projects/${projectId}/view/${id}`;
 
           const params = new URLSearchParams();
-          if (selectedWorkspace) {
-            params.append('workspace', selectedWorkspace);
-          }
           if (selectedCategories && selectedCategories.length > 0) {
             params.append('categories', selectedCategories.join(','));
           }
@@ -110,7 +115,7 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
     };
 
     fetchData();
-  }, [projectId, type, id, selectedCategories, selectedWorkspace]);
+  }, [id, isAuthenticated, projectId, selectedCategories, selectedWorkspace, type]);
 
   const handleCellClick = (rowIndex: number, column: string, currentValue: any) => {
     // Don't allow editing of ID columns
@@ -135,8 +140,8 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
     setSaveError(null);
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const token = await getAccessToken({ requireAuth: true });
+      if (!token) {
         setSaveError('You must be signed in to edit data');
         setSaving(false);
         return;
@@ -152,7 +157,7 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           [editingCell.column]: editValue
@@ -197,8 +202,8 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
     }
 
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const token = await getAccessToken({ requireAuth: true });
+      if (!token) {
         alert('You must be signed in to delete data');
         return;
       }
@@ -212,7 +217,7 @@ export default function DataViewer({ projectId, type, id, selectedCategories, se
       const response = await fetch(`http://localhost:8000/api/workspaces/${selectedWorkspace}/data/${tableId}/${rowId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${session.access_token}`
+          'Authorization': `Bearer ${token}`
         }
       });
 

@@ -167,6 +167,21 @@ def get_workspace_by_id(workspace_id: str) -> Optional[Dict[str, Any]]:
         return None
 
 
+def is_user_workspace_member(workspace_id: str, user_id: str) -> bool:
+    """Check if a user is a member of a workspace"""
+    try:
+        result = supabase.table("workspace_members")\
+            .select("id")\
+            .eq("workspace_id", workspace_id)\
+            .eq("user_id", user_id)\
+            .limit(1)\
+            .execute()
+        return bool(result.data)
+    except Exception as e:
+        print(f"Error checking workspace membership: {e}")
+        return False
+
+
 def create_default_workspace_structure(workspace_id: str, schema: Dict[str, Any]) -> bool:
     """
     Create default tables, views, and categories for a new workspace
@@ -183,7 +198,9 @@ def create_default_workspace_structure(workspace_id: str, schema: Dict[str, Any]
             })
 
         if table_schemas:
-            supabase.table("table_schemas").insert(table_schemas).execute()
+            supabase.table("table_schemas")\
+                .upsert(table_schemas, on_conflict="workspace_id,table_id")\
+                .execute()
 
         # 2. Create default view schemas
         view_schemas = []
@@ -195,25 +212,139 @@ def create_default_workspace_structure(workspace_id: str, schema: Dict[str, Any]
             })
 
         if view_schemas:
-            supabase.table("view_schemas").insert(view_schemas).execute()
+            supabase.table("view_schemas")\
+                .upsert(view_schemas, on_conflict="workspace_id,view_id")\
+                .execute()
 
-        # 3. Create default categories
-        default_categories = schema.get("default_categories", [])
-        categories = []
-        for cat in default_categories:
-            categories.append({
-                "workspace_id": workspace_id,
-                "category_id": cat.get("id"),
-                "name": cat.get("name"),
-                "icon": cat.get("icon"),
-                "color": cat.get("color"),
-                "parent_id": cat.get("parent_id")
-            })
-
-        if categories:
-            supabase.table("categories").insert(categories).execute()
+        # 3. Skip creating default categories
+        # Categories will be created as needed when AI generates plan content
+        # The database schema for categories may differ from the default_categories structure
 
         return True
     except Exception as e:
         print(f"Error creating default workspace structure: {e}")
         return False
+
+
+def insert_plan_data(workspace_id: str, category: str, plan_data: Dict[str, Any]) -> bool:
+    """
+    Insert plan data (goals, actions, metrics) into workspace table_data table
+
+    plan_data structure:
+    {
+        "goals": [{"goal": "...", "timeframe": "...", ...}],
+        "actions": [{"action": "...", "type": "...", ...}],
+        "metrics": [{"metric_name": "...", "unit": "...", ...}]
+    }
+    """
+    try:
+        import uuid
+
+        inserted_count = {
+            "goals": 0,
+            "actions": 0,
+            "metrics": 0
+        }
+
+        # Insert goals into table_data
+        if plan_data.get("goals"):
+            for goal in plan_data["goals"]:
+                row_id = str(uuid.uuid4())
+                goal_data = {
+                    "category_id": category,
+                    **goal
+                }
+
+                supabase.table("table_data").insert({
+                    "workspace_id": workspace_id,
+                    "table_id": "goals",
+                    "row_id": row_id,
+                    "data": goal_data
+                }).execute()
+                inserted_count["goals"] += 1
+
+        # Insert actions into table_data
+        if plan_data.get("actions"):
+            for action in plan_data["actions"]:
+                row_id = str(uuid.uuid4())
+                action_data = {
+                    "category_id": category,
+                    **action
+                }
+
+                supabase.table("table_data").insert({
+                    "workspace_id": workspace_id,
+                    "table_id": "actions",
+                    "row_id": row_id,
+                    "data": action_data
+                }).execute()
+                inserted_count["actions"] += 1
+
+        # Insert metrics into table_data
+        if plan_data.get("metrics"):
+            for metric in plan_data["metrics"]:
+                row_id = str(uuid.uuid4())
+                metric_data = {
+                    "category_id": category,
+                    **metric
+                }
+
+                supabase.table("table_data").insert({
+                    "workspace_id": workspace_id,
+                    "table_id": "metrics",
+                    "row_id": row_id,
+                    "data": metric_data
+                }).execute()
+                inserted_count["metrics"] += 1
+
+        print(f"Inserted plan data: {inserted_count['goals']} goals, {inserted_count['actions']} actions, {inserted_count['metrics']} metrics")
+        return True
+    except Exception as e:
+        print(f"Error inserting plan data: {e}")
+        return False
+
+
+def get_or_create_life_workspace(user_id: str = None) -> Optional[str]:
+    """
+    Get existing Life OS workspace or create a new one
+    Returns workspace_id
+    """
+    try:
+        # Check if workspace already exists
+        if user_id:
+            # For authenticated users, check their workspaces
+            result = supabase.table("workspace_members")\
+                .select("workspace_id, workspaces(id, name)")\
+                .eq("user_id", user_id)\
+                .execute()
+
+            for item in result.data:
+                workspace = item.get("workspaces")
+                if workspace and "Life" in workspace.get("name", ""):
+                    return workspace["id"]
+
+        # Create new workspace if none exists
+        workspace_result = supabase.table("workspaces").insert({
+            "name": "Life OS",
+            "icon": "🌟",
+            "description": "Your life planning workspace",
+            "created_by": user_id
+        }).execute()
+
+        if workspace_result.data:
+            workspace_id = workspace_result.data[0]['id']
+
+            # Add user as workspace member if authenticated
+            if user_id:
+                supabase.table("workspace_members").insert({
+                    "workspace_id": workspace_id,
+                    "user_id": user_id,
+                    "role": "owner"
+                }).execute()
+
+            return workspace_id
+
+        return None
+    except Exception as e:
+        print(f"Error getting/creating workspace: {e}")
+        return None

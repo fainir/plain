@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase/client';
+import { getAccessToken } from '@/lib/supabase/getAccessToken';
 
 interface Category {
   id: string;
@@ -17,9 +18,10 @@ interface CategoryFilterProps {
   workspaceId?: string;
   selectedCategories: string[];
   onCategoryChange: (categoryIds: string[]) => void;
+  isAuthenticated?: boolean;
 }
 
-export default function CategoryFilter({ projectId, workspaceId, selectedCategories, onCategoryChange }: CategoryFilterProps) {
+export default function CategoryFilter({ projectId, workspaceId, selectedCategories, onCategoryChange, isAuthenticated = false }: CategoryFilterProps) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryTree, setCategoryTree] = useState<Category[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,17 +29,21 @@ export default function CategoryFilter({ projectId, workspaceId, selectedCategor
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchCategories = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
-
-        let url: string;
-        let headers: any = {};
+        let url: string | null = null;
+        const headers: Record<string, string> = {};
 
         // Use workspace endpoint if workspaceId provided, otherwise use legacy project endpoint
-        if (workspaceId && session) {
+        if (workspaceId) {
+          const token = await getAccessToken({ requireAuth: isAuthenticated });
+          if (!token && isAuthenticated) return;
           url = `http://localhost:8000/api/workspaces/${workspaceId}/categories`;
-          headers = { 'Authorization': `Bearer ${session.access_token}` };
+          if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+          }
         } else if (projectId) {
           url = `http://localhost:8000/api/projects/${projectId}/categories`;
         } else {
@@ -46,6 +52,8 @@ export default function CategoryFilter({ projectId, workspaceId, selectedCategor
 
         const response = await fetch(url, { headers });
         const data = await response.json();
+
+        if (!isMounted) return;
 
         setCategories(data.categories || []);
         setCategoryTree(data.tree || []);
@@ -59,7 +67,15 @@ export default function CategoryFilter({ projectId, workspaceId, selectedCategor
     };
 
     fetchCategories();
-  }, [projectId, workspaceId]);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      fetchCategories();
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [isAuthenticated, projectId, workspaceId]);
 
   // Close dropdown when clicking outside
   useEffect(() => {

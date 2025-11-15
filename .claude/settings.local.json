@@ -17,7 +17,8 @@
       "Bash(npm install:*)",
       "Bash(curl:*)",
       "Bash(pip3 install:*)",
-      "Bash(kill:*)"
+      "Bash(kill:*)",
+      "Bash(python3.13:*)"
     ],
     "deny": [],
     "ask": []

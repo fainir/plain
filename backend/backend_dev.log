@@ -1,0 +1,23 @@
+INFO:     Will watch for changes in these directories: ['/Users/nirfeinstein/Documents/GitHub/plain/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [46595] using WatchFiles
+INFO:     Started server process [46603]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     ('127.0.0.1', 56436) - "WebSocket /ws/assistant/4c339b56-543b-44a6-9691-9f068d5fa5b8" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56566) - "WebSocket /ws/assistant/4c339b56-543b-44a6-9691-9f068d5fa5b8" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     ('127.0.0.1', 56585) - "WebSocket /ws/assistant/4c339b56-543b-44a6-9691-9f068d5fa5b8" [accepted]
+INFO:     connection open
+INFO:     ('127.0.0.1', 56595) - "WebSocket /ws/assistant/4c339b56-543b-44a6-9691-9f068d5fa5b8" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     connection closed
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [46603]
+INFO:     Stopping reloader process [46595]

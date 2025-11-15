@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { supabase } from '@/lib/supabase/client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -12,11 +13,6 @@ interface GuestPlan {
   workspaceData?: any;
 }
 
-interface WorkspaceCreatedData {
-  workspaceId: string;
-  workspaceName: string;
-}
-
 const GUEST_PLAN_KEY = 'plain_guest_plan';
 
 export function useAIChat(plannerType: string) {
@@ -25,6 +21,22 @@ export function useAIChat(plannerType: string) {
   const [isConnected, setIsConnected] = useState(false);
   const [guestWorkspaceId, setGuestWorkspaceId] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const syncAuthState = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setIsAuthenticated(!!session?.user);
+    };
+
+    syncAuthState();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session?.user);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Load existing guest plan from localStorage if available
   useEffect(() => {
@@ -80,6 +92,9 @@ export function useAIChat(plannerType: string) {
         // AI generated a workspace - store the guest workspace ID
         console.log('Guest workspace created:', data.workspaceId);
         setGuestWorkspaceId(data.workspaceId);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('guest_workspace_id', data.workspaceId);
+        }
 
         // Save to localStorage
         const plan: GuestPlan = {
@@ -148,7 +163,8 @@ export function useAIChat(plannerType: string) {
     isConnected,
     guestWorkspaceId,
     sendMessage,
-    clearGuestPlan
+    clearGuestPlan,
+    isAuthenticated
   };
 }
 
